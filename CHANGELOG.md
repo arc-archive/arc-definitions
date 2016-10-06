@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.1...v1.0.3) (2016-10-06)
+
+
+### New
+
+* Added hero image ([aa813f4da12beda5b4b10c515d9e2051225810a3](https://github.com/advanced-rest-client/arc-definitions/commit/aa813f4da12beda5b4b10c515d9e2051225810a3))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.1...v1.0.2) (2016-09-29)
 
