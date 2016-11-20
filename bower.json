@@ -4,7 +4,9 @@
   "author": "The Advanced REST client authors",
   "keywords": [
     "web-components",
-    "polymer"
+    "polymer",
+    "data",
+    "definitions"
   ],
   "private": true,
   "main": [
