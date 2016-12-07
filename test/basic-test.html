@@ -98,7 +98,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var element = fixture('basic');
         var fn = (e) => {
           element.removeEventListener('downloaded-changed', fn);
-          var detail = {'detail': {'type': 'request', 'query': 'Content'}};
+          var detail = {
+            'detail': {'type': 'request', 'query': 'Content'},
+            'bubbles': true
+          };
           var event = new CustomEvent('query-headers', detail);
           document.dispatchEvent(event);
           var results = event.detail.headers;
