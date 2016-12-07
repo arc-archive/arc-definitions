@@ -1,6 +1,6 @@
 {
-  "esnext": true,
-  "node": true,
+  "esnext": false,
+  "node": false,
   "browser": true,
   "bitwise": false,
   "camelcase": false,
@@ -16,7 +16,7 @@
   "newcap": false,
   "globals": {
     "Polymer": true,
-    "fetch": true,
-    "Headers": true
+    "console": true,
+    "Promise": true
   }
 }
