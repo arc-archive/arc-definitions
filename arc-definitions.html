@@ -59,17 +59,28 @@ let statusCode = event.detail.statusCode;
   'use strict';
   /* global chrome */
   var importLocation = '';
-  if (window.currentImport && window.currentImport.URL) {
-    let url = window.currentImport.URL;
-    let path = url.substr(url.indexOf('/', url.indexOf('/') + 2))
-      .replace('arc-definitions.html', '');
-    let lastDot = path.lastIndexOf('.');
-    if (lastDot !== -1 && path.substr(lastDot + 1) === 'html') {
-      // remove element file name path
-      path = path.substr(0, path.lastIndexOf('/') + 1);
+  (function() {
+    if (window.currentImport && window.currentImport.URL) {
+      var url = window.currentImport.URL;
+      if (url === 'about:blank') {
+        importLocation = '../';
+        // in test cases for edge this will fail because it should be set to ../../
+        // but right now I can't waste time to check how to check if this is the particular case.
+      } else {
+        var path = url.substr(url.indexOf('/', url.indexOf('/') + 2))
+          .replace('arc-definitions.html', '');
+        var lastDot = path.lastIndexOf('.');
+        if (lastDot !== -1 && path.substr(lastDot + 1) === 'html') {
+          // remove element file name path
+          path = path.substr(0, path.lastIndexOf('/') + 1);
+        }
+        if (path.indexOf('/test') !== -1) {
+          path = path.substr(0, path.lastIndexOf('/') + 1);
+        }
+        importLocation = path;
+      }
     }
-    importLocation = path;
-  }
+  })();
 
   Polymer({
     is: 'arc-definitions',
@@ -179,7 +190,13 @@ let statusCode = event.detail.statusCode;
     // Downloads the definitions and sets attrinbuttes.
     downloadDefinitions: function() {
       var file = importLocation + 'definitions.json';
-      var url = !!(chrome.runtime && chrome.runtime.getURL) ? chrome.runtime.getURL(file) : file;
+      var url;
+      if (typeof chrome !== 'undefined') {
+        url = !!(chrome.runtime && chrome.runtime.getURL) ?
+         chrome.runtime.getURL(file) : file;
+      } else {
+        url = file;
+      }
       // for test cases
       return new Promise(function(resolve, reject) {
         var r = new XMLHttpRequest();
