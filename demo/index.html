@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
         </ul>
         <script>
-          document.querySelector('#codes').addEventListener('status-codes-changed', (e) => {
+          document.querySelector('#codes').addEventListener('status-codes-changed', function(e) {
             document.querySelector('#codesList').items = e.detail.value;
           });
         </script>
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-radio-button name="response">Response headers</paper-radio-button>
         </paper-radio-group>
         <paper-button raised id="queryButton">Query</paper-button>
-        
+
         <ul>
         <template is="dom-repeat" id="queryResults">
           <li><b>[[item.key]]</b> - [[item.desc]]</li>
@@ -74,10 +74,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </ul>
 
         <script>
-          document.querySelector('#queryButton').addEventListener('tap', (e) => {
+          document.querySelector('#queryButton').addEventListener('tap', function() {
             var type = document.querySelector('#type').selected;
             var name = document.querySelector('#headerName').value;
-            var event = new CustomEvent('query-headers', {'detail': {'type': type, 'query': name}});
+            var event = new CustomEvent('query-headers', {
+              'detail': {'type': type, 'query': name},
+              'bubbles': true
+            });
             document.dispatchEvent(event);
             document.querySelector('#queryResults').items = event.detail.headers;
           });
