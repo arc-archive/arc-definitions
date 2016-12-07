@@ -62,6 +62,9 @@ let statusCode = event.detail.statusCode;
   (function() {
     if (window.currentImport && window.currentImport.URL) {
       var url = window.currentImport.URL;
+      if (url === 'about:blank' && window.currentImport._URL) {
+        url = window.currentImport._URL;
+      }
       if (url === 'about:blank') {
         importLocation = '../';
         // in test cases for edge this will fail because it should be set to ../../
