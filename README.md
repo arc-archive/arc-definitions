@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/advanced-rest-client/arc-definitions.svg?branch=master)](https://travis-ci.org/advanced-rest-client/arc-definitions)  [![Dependency Status](https://dependencyci.com/github/advanced-rest-client/arc-definitions/badge)](https://dependencyci.com/github/advanced-rest-client/arc-definitions)  
+
+# arc-definitions
 
 `<arc-definitions>` Internal data definitions used in ARC. Contains definitions for status codes and
 request and response headers.

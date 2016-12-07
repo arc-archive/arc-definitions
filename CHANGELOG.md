@@ -1,3 +1,18 @@
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.3...v1.0.4) (2016-12-07)
+
+
+### Fix
+
+* fixed issues causing test to fail ([2f3f5747f954a9bee52437556e5eeca7e28231cb](https://github.com/advanced-rest-client/arc-definitions/commit/2f3f5747f954a9bee52437556e5eeca7e28231cb))
+* Fixed travis configuration ([a2104d3e7d081b06202d8106e20eaf7826321f83](https://github.com/advanced-rest-client/arc-definitions/commit/a2104d3e7d081b06202d8106e20eaf7826321f83))
+
+### Update
+
+* Added new Travis configuration ([ce3aa1add4429a7d02a6ef0ede9c49992e154d14](https://github.com/advanced-rest-client/arc-definitions/commit/ce3aa1add4429a7d02a6ef0ede9c49992e154d14))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.1...v1.0.3) (2016-10-06)
 
