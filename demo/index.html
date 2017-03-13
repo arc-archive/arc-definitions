@@ -41,18 +41,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <div class="vertical-section-container centered">
     <h3>Status codes</h3>
     <demo-snippet>
-      <template>
-        <arc-definitions id="codes"></arc-definitions>
+      <template is="dom-bind">
+        <arc-definitions id="codes" status-codes="{{codes}}"></arc-definitions>
         <ul>
-        <template is="dom-repeat" id="codesList">
-          <li>[[item.key]] [[item.label]] - [[item.desc]]</li>
+        <template is="dom-repeat" items="[[codes]]">
+          <li>
+            <b>[[item.key]] [[item.label]]</b>
+            <p>[[item.desc]]</p>
+          </li>
         </template>
         </ul>
-        <script>
-          document.querySelector('#codes').addEventListener('status-codes-changed', function(e) {
-            document.querySelector('#codesList').items = e.detail.value;
-          });
-        </script>
       </template>
     </demo-snippet>
 

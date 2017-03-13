@@ -1,3 +1,15 @@
+<a name="1.0.6"></a>
+## [1.0.6](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.5...v1.0.6) (2017-03-13)
+
+
+### Update
+
+* Removed JSON file download and put the definitions into the element body for faster initialization. ([1a5211554d5df864eccee41ff2bd3940497133f1](https://github.com/advanced-rest-client/arc-definitions/commit/1a5211554d5df864eccee41ff2bd3940497133f1))
+* updated tests. I must have been very tired when I wrote the previous version... ([76bcd7813298d9d2a2f04fa649b384ab4f9a888c](https://github.com/advanced-rest-client/arc-definitions/commit/76bcd7813298d9d2a2f04fa649b384ab4f9a888c))
+* Updated travis configuration ([1cf0c62e0aaa122df4f86f6395b472cb8812212c](https://github.com/advanced-rest-client/arc-definitions/commit/1cf0c62e0aaa122df4f86f6395b472cb8812212c))
+
+
+
 <a name="1.0.5"></a>
 ## [1.0.5](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.4...v1.0.5) (2016-12-07)
 
