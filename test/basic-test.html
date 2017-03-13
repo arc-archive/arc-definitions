@@ -9,110 +9,73 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
-    <script src="../../iron-test-helpers/test-helpers.js"></script>
-    <script src="../../iron-test-helpers/mock-interactions.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../iron-test-helpers/test-helpers.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../arc-definitions.html">
+</head>
 
-    <!-- Step 1: import the element to test -->
-    <link rel="import" href="../arc-definitions.html">
-  </head>
-  <body>
+<body>
+  <test-fixture id="basic">
+    <template>
+      <arc-definitions></arc-definitions>
+    </template>
+  </test-fixture>
+  <script>
+  /* global suite, test, fixture, assert */
+  suite('basic', function() {
+    var element;
 
-    <test-fixture id="basic">
-      <template>
-        <arc-definitions></arc-definitions>
-      </template>
-    </test-fixture>
-
-    <script>
-    /* global suite, test, fixture, assert */
-    suite('basic', function() {
-      test('`arc-definitions` should be initialized', function() {
-        var element = fixture('basic');
-        assert.equal(element.isAttached, true, 'element.isAttached equals true');
-      });
-
-      test('should fire `downloaded-changed` event', function(done) {
-        var element = fixture('basic');
-        var fn = (e) => {
-          element.removeEventListener('downloaded-changed', fn);
-          done();
-        };
-        element.addEventListener('downloaded-changed', fn);
-      });
-
-      test('should contain definitions', function(done) {
-        var element = fixture('basic');
-        var fn = (e) => {
-          element.removeEventListener('downloaded-changed', fn);
-          assert(Array.isArray(element.statusCodes), 'status codes is an array');
-          assert(Array.isArray(element.responseHeaders), 'responseHeaders is an array');
-          assert(Array.isArray(element.requestHeaders), 'requestHeaders is an array');
-          done();
-        };
-        element.addEventListener('downloaded-changed', fn);
-      });
-
-      test('should query request headers', function(done) {
-        var element = fixture('basic');
-        var fn = (e) => {
-          element.removeEventListener('downloaded-changed', fn);
-          var results = element.queryRequestHeaders('Content');
-          assert(Array.isArray(results), 'query result is an array');
-          assert.isAbove(results.length, 0, 'query results length > 0');
-          done();
-        };
-        element.addEventListener('downloaded-changed', fn);
-      });
-
-      test('should query response headers', function(done) {
-        var element = fixture('basic');
-        var fn = (e) => {
-          element.removeEventListener('downloaded-changed', fn);
-          var results = element.queryResponseHeaders('Content');
-          assert(Array.isArray(results), 'query result is an array');
-          assert.isAbove(results.length, 0, 'query results length > 0');
-          done();
-        };
-        element.addEventListener('downloaded-changed', fn);
-      });
-
-      test('should query status code', function(done) {
-        var element = fixture('basic');
-        var fn = (e) => {
-          element.removeEventListener('downloaded-changed', fn);
-          var result = element.getStatusCode(200);
-          assert.isObject(result, 'query result is an object');
-          assert.strictEqual(result.key, 200, 'result key === 0');
-          done();
-        };
-        element.addEventListener('downloaded-changed', fn);
-      });
-
-      test('should handle query event', function(done) {
-        var element = fixture('basic');
-        var fn = (e) => {
-          element.removeEventListener('downloaded-changed', fn);
-          var detail = {
-            'detail': {'type': 'request', 'query': 'Content'},
-            'bubbles': true
-          };
-          var event = new CustomEvent('query-headers', detail);
-          document.dispatchEvent(event);
-          var results = event.detail.headers;
-          assert(Array.isArray(results), 'query result is an array');
-          assert.isAbove(results.length, 0, 'query results length > 0');
-          done();
-        };
-        element.addEventListener('downloaded-changed', fn);
-      });
+    setup(function() {
+      element = fixture('basic');
     });
-    </script>
 
-  </body>
+    test('should contain definitions', function() {
+      assert.isArray(element.statusCodes, 'status codes is an array');
+      assert.isArray(element.responseHeaders, 'responseHeaders is an array');
+      assert.isArray(element.requestHeaders, 'requestHeaders is an array');
+    });
+
+    test('should query request headers', function() {
+      var results = element.queryRequestHeaders('Content');
+      assert.isArray(results, 'query result is an array');
+      assert.isAbove(results.length, 0, 'query results length > 0');
+    });
+
+    test('should query response headers', function() {
+      var results = element.queryResponseHeaders('Content');
+      assert.isArray(results, 'query result is an array');
+      assert.isAbove(results.length, 0, 'query results length > 0');
+    });
+
+    test('should query status code', function() {
+      var result = element.getStatusCode(200);
+      assert.isObject(result, 'query result is an object');
+      assert.strictEqual(result.key, 200, 'result key === 0');
+    });
+
+    test('should handle query event', function() {
+      var detail = {
+        'detail': {
+          'type': 'request',
+          'query': 'Content'
+        },
+        'bubbles': true
+      };
+      var event = new CustomEvent('query-headers', detail);
+      document.dispatchEvent(event);
+      var results = event.detail.headers;
+      assert.isArray(results, 'query result is an array');
+      assert.isAbove(results.length, 0, 'query results length > 0');
+    });
+  });
+  </script>
+</body>
+
 </html>
