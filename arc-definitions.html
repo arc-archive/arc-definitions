@@ -351,8 +351,11 @@ let statusCode = event.detail.statusCode;
       },
 
       _queryHeadersHandler: function(event) {
-        // Always stop the event from being propagated.
+        if (event.defaultPrevented) {
+          return;
+        }
         event.stopImmediatePropagation();
+        event.preventDefault();
         var type = event.detail.type;
         if (!type) {
           event.detail.headers = [];
@@ -362,8 +365,11 @@ let statusCode = event.detail.statusCode;
       },
 
       _queryCodesHandler: function(event) {
-        // Always stop the event from being propagated.
+        if (event.defaultPrevented) {
+          return;
+        }
         event.stopImmediatePropagation();
+        event.preventDefault();
         event.detail.statusCode = this.getStatusCode(event.detail.code);
       }
     });
