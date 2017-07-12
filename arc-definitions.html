@@ -13,8 +13,8 @@ the License.
 -->
 <link rel="import" href="../polymer/polymer.html">
 <!--
-`<arc-definitions>` Internal data definitions used in ARC. Contains definitions for status codes and
-request and response headers.
+Request / response information data used in ARC.
+Contains definitions for status codes and request and response headers.
 
 The fileds may be empty when not yet initialized.
 
@@ -32,20 +32,79 @@ contain the data.
 ```
 
 ### Firing events Example
-This is a Polymer way but regular JavaScript event will do.
-```
+
+```javascript
+// Polymer 1.x
 let event = this.fire('query-headers', {
   'type': 'request', // or response, mandatory
   'query': 'Acce' // finds all request headers containing `acce` in their name
+}, {
+  cancelable: true
 });
-let headers = event.detail.headers;
+console.log(event.defaultPrevented); // true
+let headers = event.detail.headers;  // Array[]
 ```
 
+```javascript
+// Vanilla JavaScript
+var event = new CustomEvent('query-headers', {
+  detail: {
+    'type': 'request',
+    'query': 'Acce'
+  },
+  bubbles: true,
+  composed: true,
+  cancelable: true
+});
+document.body.dispatchEvent(event);
+console.log(event.defaultPrevented); // true
+let headers = event.detail.headers;  // Array[]
 ```
+
+```javascript
 let event = this.fire('query-status-codes', {
   'code': 200
+}, {
+  cancelable: true
 });
-let statusCode = event.detail.statusCode;
+console.log(event.defaultPrevented); // true
+let statusCode = event.detail.statusCode;  // Array[]
+```
+
+```javascript
+// Vanilla JavaScript
+var event = new CustomEvent('query-status-codes', {
+  detail: {
+    'code': 200
+  },
+  bubbles: true,
+  composed: true,
+  cancelable: true
+});
+document.body.dispatchEvent(event);
+console.log(event.defaultPrevented); // true
+let statusCode = event.detail.statusCode; // Array[]
+```
+
+The event should be cancellable so the element can cancel it and other
+instances of this element will not handle it again. Though it's not an error
+dispatching this event as not cancelable.
+
+If the element was handled by the element and the event is cancelable then
+event's `defaultPrevented` flag is set to `true`.
+
+If query event do not contain query value then all values for given query type
+will be returned.
+
+For example following event returns all request headers
+
+```javascript
+let event = this.fire('query-headers', {
+  'type': 'request',
+  'query': '' // it might be not defined.
+}, {
+  cancelable: true
+});
 ```
 
 @group Logic Elements
@@ -281,44 +340,53 @@ let statusCode = event.detail.statusCode;
         this.unlisten(this._eventTarget, 'query-status-codes', '_queryCodesHandler');
       },
       /**
-       * Query for request headers containin a `query`.
+       * Queries for request headers that containins a `query`. If query is
+       * not set (value is falsy) then it returns all headers definitions array.
        *
-       * @param {String} name A header name to look for. It will match a header where the header
-       * name contains the `name` param.
-       * @return {Array<Object>} Array of the request headers matched `name` in the `key` field.
+       * @param {String} name A header name to look for. It will match a header
+       * where the header name contains the `name` param.
+       * @return {Array<Object>} Array of the request headers matched `name` in
+       * the header's `key` field.
        */
       queryRequestHeaders: function(name) {
         return this.queryHeaders(name, 'request');
       },
 
       /**
-       * Query for response headers containin a `query`.
+       * Queries for response headers that containins a `query`. If query is
+       * not set (value is falsy) then it returns all headers definitions array.
        *
        * @param {String} name A header name to look for. It will match a header where the header
        * name contains the `name` param.
-       * @return {Array<Object>} Array of the response headers matched `name` in the `key` field.
+       * @return {Array<Object>} Array of the response headers matched `name`
+       * in the header's `key` field.
        */
       queryResponseHeaders: function(name) {
         return this.queryHeaders(name);
       },
 
       /**
-       * Query for headers containin a `query`.
+       * Queries for headers containin a `query`. If query is not set
+       * (value is falsy) then it returns all headers definitions array.
        *
-       * @param {String} query A query to search for in the `key` field of the headers array.
-       * @param {String} type If this equals `request` then it will look in the request headers
-       *                       array. In the response headers list otherwise.
-       * @return {Array<Object>} Array of the headers of selected `type` matched a `query` in a
-       * `key` field.
+       * @param {String} query A query to search for in the `key` field of the
+       * headers array.
+       * @param {String} type If this equals `request` then it will look in the
+       * request headers array. In the response headers list otherwise.
+       * @return {Array<Object>} Array of the headers of selected `type`
+       * matched a `query` in a header's `key` field.
        */
       queryHeaders: function(query, type) {
         var headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
-        if (!query || !headers || !headers.length) {
+        if (!headers || !headers.length) {
           return [];
+        }
+        if (!query) {
+          return headers;
         }
         query = query.trim().toLowerCase();
         if (!query) {
-          return [];
+          return headers;
         }
         return headers.filter(function(item) {
           return item.key.toLowerCase().indexOf(query) !== -1;
@@ -333,8 +401,11 @@ let statusCode = event.detail.statusCode;
        */
       getStatusCode: function(code) {
         var codes = this.statusCodes;
-        if (!code || !codes || !codes.length) {
+        if (!codes || !codes.length) {
           return null;
+        }
+        if (!code) {
+          return codes;
         }
         code = Number(code);
         if (code !== code) {
@@ -349,7 +420,9 @@ let statusCode = event.detail.statusCode;
         }
         return res[0];
       },
-
+      /**
+       * A handler for the status headers query event
+       */
       _queryHeadersHandler: function(event) {
         if (event.defaultPrevented) {
           return;
@@ -363,7 +436,9 @@ let statusCode = event.detail.statusCode;
         }
         event.detail.headers = this.queryHeaders(event.detail.query, type);
       },
-
+      /**
+       * A handler for the status code query event
+       */
       _queryCodesHandler: function(event) {
         if (event.defaultPrevented) {
           return;
