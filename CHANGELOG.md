@@ -1,3 +1,22 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.6...v1.0.7) (2017-07-12)
+
+
+### Breaking
+
+* Query events now returns all type list values if query value is not set. ([a33c8021c3853c5fa48a38418efe4d9574d83507](https://github.com/advanced-rest-client/arc-definitions/commit/a33c8021c3853c5fa48a38418efe4d9574d83507))
+
+### New
+
+* Added `event.preventDefault()` to the events to determine that the event has been handled. ([cbba79a38c1eb6fad35bb8caad59a36d0512245b](https://github.com/advanced-rest-client/arc-definitions/commit/cbba79a38c1eb6fad35bb8caad59a36d0512245b))
+* Added more detailed tests. ([7faae00660e6a2ddde29df5b19ad931d3c5d3f1a](https://github.com/advanced-rest-client/arc-definitions/commit/7faae00660e6a2ddde29df5b19ad931d3c5d3f1a))
+
+### Update
+
+* Updated element Travis and tests configuration to current state. ([7ea9ae09b1ad56ecf3e73c001b394c7e9dd7d0fc](https://github.com/advanced-rest-client/arc-definitions/commit/7ea9ae09b1ad56ecf3e73c001b394c7e9dd7d0fc))
+
+
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.5...v1.0.6) (2017-03-13)
 
