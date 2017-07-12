@@ -17,7 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../iron-test-helpers/test-helpers.js"></script>
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
-  <!-- Step 1: import the element to test -->
   <link rel="import" href="../arc-definitions.html">
 </head>
 
@@ -48,31 +47,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       assert.isAbove(results.length, 0, 'query results length > 0');
     });
 
+    test('should query request headers with empty argument', function() {
+      var results = element.queryRequestHeaders();
+      assert.lengthOf(results, element.requestHeaders.length);
+    });
+
     test('should query response headers', function() {
       var results = element.queryResponseHeaders('Content');
       assert.isArray(results, 'query result is an array');
       assert.isAbove(results.length, 0, 'query results length > 0');
     });
 
-    test('should query status code', function() {
-      var result = element.getStatusCode(200);
-      assert.isObject(result, 'query result is an object');
-      assert.strictEqual(result.key, 200, 'result key === 0');
+    test('should query response headers with empty argument', function() {
+      var results = element.queryResponseHeaders();
+      assert.lengthOf(results, element.responseHeaders.length);
     });
 
-    test('should handle query event', function() {
-      var detail = {
-        'detail': {
-          'type': 'request',
-          'query': 'Content'
-        },
-        'bubbles': true
-      };
-      var event = new CustomEvent('query-headers', detail);
-      document.dispatchEvent(event);
-      var results = event.detail.headers;
-      assert.isArray(results, 'query result is an array');
-      assert.isAbove(results.length, 0, 'query results length > 0');
+    test('should query status code', function() {
+      var result = element.getStatusCode(200);
+      assert.strictEqual(result.key, 200);
+    });
+
+    test('should query status code with empty argument', function() {
+      var result = element.getStatusCode();
+      assert.lengthOf(result, element.statusCodes.length);
     });
   });
   </script>

@@ -16,8 +16,6 @@
   "newcap": false,
   "mocha": true,
   "globals": {
-    "Polymer": true,
-    "console": true,
-    "Promise": true
+    "Polymer": true
   }
 }
