@@ -269,10 +269,7 @@ let event = this.fire('query-headers', {
         requestHeaders: {
           type: Array,
           notify: true,
-          readOnly: true,
-          value: function() {
-            return [];
-          }
+          readOnly: true
         },
         /**
          * A list of response headers.
@@ -292,10 +289,7 @@ let event = this.fire('query-headers', {
         responseHeaders: {
           type: Array,
           notify: true,
-          readOnly: true,
-          value: function() {
-            return [];
-          }
+          readOnly: true
         },
         /**
          * A list of status codes definitions.
@@ -315,18 +309,24 @@ let event = this.fire('query-headers', {
         statusCodes: {
           type: Array,
           notify: true,
-          readOnly: true,
-          value: function() {
-            return [];
-          }
-        }
+          readOnly: true
+        },
+        /**
+         * If set the element will not load definitions into the memory when it's
+         * created but rather when any data access function is called.
+         *
+         * This roperty is deprecated and will be removed in next major release
+         * version. New behavior will always prohibit loading definitions
+         * when component is ready.
+         * @deprecated
+         */
+        loadOnDemand: Boolean
       },
 
       ready: function() {
-        var defs = JSON.parse(this.$.content.textContent);
-        this._setRequestHeaders(defs.requests);
-        this._setResponseHeaders(defs.responses);
-        this._setStatusCodes(defs.codes);
+        if (!this.loadOnDemand) {
+          this._setDefinitions();
+        }
       },
 
       attached: function() {
@@ -339,6 +339,15 @@ let event = this.fire('query-headers', {
         this.unlisten(this._eventTarget, 'query-headers', '_queryHeadersHandler');
         this.unlisten(this._eventTarget, 'query-status-codes', '_queryCodesHandler');
       },
+
+      _setDefinitions: function() {
+        var defs = JSON.parse(this.$.content.textContent);
+        this._setRequestHeaders(defs.requests);
+        this._setResponseHeaders(defs.responses);
+        this._setStatusCodes(defs.codes);
+        this._definitionsReady = true;
+      },
+
       /**
        * Queries for request headers that containins a `query`. If query is
        * not set (value is falsy) then it returns all headers definitions array.
@@ -377,6 +386,9 @@ let event = this.fire('query-headers', {
        * matched a `query` in a header's `key` field.
        */
       queryHeaders: function(query, type) {
+        if (!this._definitionsReady) {
+          this._setDefinitions();
+        }
         var headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
         if (!headers || !headers.length) {
           return [];
@@ -400,6 +412,9 @@ let event = this.fire('query-headers', {
        * @return {Object|null} Status code definition or null if not found.
        */
       getStatusCode: function(code) {
+        if (!this._definitionsReady) {
+          this._setDefinitions();
+        }
         var codes = this.statusCodes;
         if (!codes || !codes.length) {
           return null;
