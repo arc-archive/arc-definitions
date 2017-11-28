@@ -1,3 +1,18 @@
+<a name="1.0.9"></a>
+## [1.0.9](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.7...1.0.9) (2017-11-28)
+
+
+### New
+
+* Added autocomplete values for request headers definitions. ([2406f0cb987a35e7d030320c73d4bbeaad53bed3](https://github.com/advanced-rest-client/arc-definitions/commit/2406f0cb987a35e7d030320c73d4bbeaad53bed3))
+
+### Update
+
+* Added loading on demand option. ([e365da32b980fb0853039416f9644ca060fd0e13](https://github.com/advanced-rest-client/arc-definitions/commit/e365da32b980fb0853039416f9644ca060fd0e13))
+* Adding json file for support for linter when editing the data. ([5945fae810ccbcce472b6353ffa1255d85140399](https://github.com/advanced-rest-client/arc-definitions/commit/5945fae810ccbcce472b6353ffa1255d85140399))
+
+
+
 <a name="1.0.8"></a>
 ## [1.0.8](https://github.com/advanced-rest-client/arc-definitions/compare/1.0.7...v1.0.8) (2017-07-12)
 

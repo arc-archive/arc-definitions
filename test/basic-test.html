@@ -26,6 +26,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <arc-definitions></arc-definitions>
     </template>
   </test-fixture>
+
+  <test-fixture id="onDemand">
+    <template>
+      <arc-definitions load-on-demand></arc-definitions>
+    </template>
+  </test-fixture>
+
   <script>
   /* global suite, test, fixture, assert */
   suite('basic', function() {
@@ -71,6 +78,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     test('should query status code with empty argument', function() {
       var result = element.getStatusCode();
       assert.lengthOf(result, element.statusCodes.length);
+    });
+  });
+
+  suite('On demand', function() {
+    var element;
+
+    setup(function() {
+      element = fixture('onDemand');
+    });
+
+    test('Does not load definitions when ready', function() {
+      assert.isUndefined(element.statusCodes, 'status codes is undefined');
+      assert.isUndefined(element.responseHeaders, 'responseHeaders is undefined');
+      assert.isUndefined(element.requestHeaders, 'requestHeaders is undefined');
+    });
+
+    test('should query request headers', function() {
+      var results = element.queryRequestHeaders('Content');
+      assert.isArray(results, 'query result is an array');
+      assert.isAbove(results.length, 0, 'query results length > 0');
+    });
+
+    test('should query response headers', function() {
+      var results = element.queryResponseHeaders('Content');
+      assert.isArray(results, 'query result is an array');
+      assert.isAbove(results.length, 0, 'query results length > 0');
+    });
+
+    test('should query status code', function() {
+      var result = element.getStatusCode(200);
+      assert.strictEqual(result.key, 200);
     });
   });
   </script>
