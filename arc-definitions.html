@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright 2016 The Advanced REST client authors
+Copyright 2018 The Advanced REST client authors
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
 the License at
@@ -11,7 +11,7 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <!--
 Request / response information data used in ARC.
 Contains definitions for status codes and request and response headers.
@@ -115,7 +115,7 @@ let event = this.fire('query-headers', {
 <dom-module id="arc-definitions">
   <template>
     <style>
-     :host {
+    :host {
       display: none;
     }
     </style>
@@ -248,10 +248,12 @@ let event = this.fire('query-headers', {
     </script>
   </template>
   <script>
-    /* global console */
-    Polymer({
-      is: 'arc-definitions',
-      properties: {
+  class ArcDefinitions extends Polymer.Element {
+    static get is() {
+      return 'arc-definitions';
+    }
+    static get properties() {
+      return {
         /**
          * A list of request headers.
          *
@@ -322,147 +324,164 @@ let event = this.fire('query-headers', {
          * @deprecated
          */
         loadOnDemand: Boolean
-      },
+      };
+    }
+    /**
+     * @constructor
+     */
+    constructor() {
+      super();
+      this._queryHeadersHandler = this._queryHeadersHandler.bind(this);
+      this._queryCodesHandler = this._queryCodesHandler.bind(this);
+    }
 
-      ready: function() {
-        if (!this.loadOnDemand) {
-          this._setDefinitions();
-        }
-      },
-
-      attached: function() {
-        this._eventTarget = Polymer.dom(this).host || window;
-        this.listen(this._eventTarget, 'query-headers', '_queryHeadersHandler');
-        this.listen(this._eventTarget, 'query-status-codes', '_queryCodesHandler');
-      },
-
-      detached: function() {
-        this.unlisten(this._eventTarget, 'query-headers', '_queryHeadersHandler');
-        this.unlisten(this._eventTarget, 'query-status-codes', '_queryCodesHandler');
-      },
-
-      _setDefinitions: function() {
-        var defs = JSON.parse(this.$.content.textContent);
-        this._setRequestHeaders(defs.requests);
-        this._setResponseHeaders(defs.responses);
-        this._setStatusCodes(defs.codes);
-        this._definitionsReady = true;
-      },
-
-      /**
-       * Queries for request headers that containins a `query`. If query is
-       * not set (value is falsy) then it returns all headers definitions array.
-       *
-       * @param {String} name A header name to look for. It will match a header
-       * where the header name contains the `name` param.
-       * @return {Array<Object>} Array of the request headers matched `name` in
-       * the header's `key` field.
-       */
-      queryRequestHeaders: function(name) {
-        return this.queryHeaders(name, 'request');
-      },
-
-      /**
-       * Queries for response headers that containins a `query`. If query is
-       * not set (value is falsy) then it returns all headers definitions array.
-       *
-       * @param {String} name A header name to look for. It will match a header where the header
-       * name contains the `name` param.
-       * @return {Array<Object>} Array of the response headers matched `name`
-       * in the header's `key` field.
-       */
-      queryResponseHeaders: function(name) {
-        return this.queryHeaders(name);
-      },
-
-      /**
-       * Queries for headers containin a `query`. If query is not set
-       * (value is falsy) then it returns all headers definitions array.
-       *
-       * @param {String} query A query to search for in the `key` field of the
-       * headers array.
-       * @param {String} type If this equals `request` then it will look in the
-       * request headers array. In the response headers list otherwise.
-       * @return {Array<Object>} Array of the headers of selected `type`
-       * matched a `query` in a header's `key` field.
-       */
-      queryHeaders: function(query, type) {
-        if (!this._definitionsReady) {
-          this._setDefinitions();
-        }
-        var headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
-        if (!headers || !headers.length) {
-          return [];
-        }
-        if (!query) {
-          return headers;
-        }
-        query = query.trim().toLowerCase();
-        if (!query) {
-          return headers;
-        }
-        return headers.filter(function(item) {
-          return item.key.toLowerCase().indexOf(query) !== -1;
-        });
-      },
-
-      /**
-       * Convinient function to look for a status code in the array.
-       *
-       * @param {Number} code The status code to look for.
-       * @return {Object|null} Status code definition or null if not found.
-       */
-      getStatusCode: function(code) {
-        if (!this._definitionsReady) {
-          this._setDefinitions();
-        }
-        var codes = this.statusCodes;
-        if (!codes || !codes.length) {
-          return null;
-        }
-        if (!code) {
-          return codes;
-        }
-        code = Number(code);
-        if (code !== code) {
-          console.warn('Passed code is not a number.');
-          return null;
-        }
-        var res = codes.filter(function(item) {
-          return item.key === code;
-        });
-        if (!res.length) {
-          return null;
-        }
-        return res[0];
-      },
-      /**
-       * A handler for the status headers query event
-       */
-      _queryHeadersHandler: function(event) {
-        if (event.defaultPrevented) {
-          return;
-        }
-        event.stopImmediatePropagation();
-        event.preventDefault();
-        var type = event.detail.type;
-        if (!type) {
-          event.detail.headers = [];
-          return;
-        }
-        event.detail.headers = this.queryHeaders(event.detail.query, type);
-      },
-      /**
-       * A handler for the status code query event
-       */
-      _queryCodesHandler: function(event) {
-        if (event.defaultPrevented) {
-          return;
-        }
-        event.stopImmediatePropagation();
-        event.preventDefault();
-        event.detail.statusCode = this.getStatusCode(event.detail.code);
+    ready() {
+      super.ready();
+      if (!this.loadOnDemand) {
+        this._setDefinitions();
       }
-    });
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      window.addEventListener('query-headers', this._queryHeadersHandler);
+      window.addEventListener('query-status-codes', this._queryCodesHandler);
+    }
+
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      window.removeEventListener('query-headers', this._queryHeadersHandler);
+      window.removeEventListener('query-status-codes', this._queryCodesHandler);
+    }
+
+    _setDefinitions() {
+      var defs = JSON.parse(this.$.content.textContent);
+      this._setRequestHeaders(defs.requests);
+      this._setResponseHeaders(defs.responses);
+      this._setStatusCodes(defs.codes);
+      this._definitionsReady = true;
+    }
+
+    /**
+     * Queries for request headers that containins a `query`. If query is
+     * not set (value is falsy) then it returns all headers definitions array.
+     *
+     * @param {String} name A header name to look for. It will match a header
+     * where the header name contains the `name` param.
+     * @return {Array<Object>} Array of the request headers matched `name` in
+     * the header's `key` field.
+     */
+    queryRequestHeaders(name) {
+      return this.queryHeaders(name, 'request');
+    }
+
+    /**
+     * Queries for response headers that containins a `query`. If query is
+     * not set (value is falsy) then it returns all headers definitions array.
+     *
+     * @param {String} name A header name to look for. It will match a header where the header
+     * name contains the `name` param.
+     * @return {Array<Object>} Array of the response headers matched `name`
+     * in the header's `key` field.
+     */
+    queryResponseHeaders(name) {
+      return this.queryHeaders(name);
+    }
+
+    /**
+     * Queries for headers containin a `query`. If query is not set
+     * (value is falsy) then it returns all headers definitions array.
+     *
+     * @param {String} query A query to search for in the `key` field of the
+     * headers array.
+     * @param {String} type If this equals `request` then it will look in the
+     * request headers array. In the response headers list otherwise.
+     * @return {Array<Object>} Array of the headers of selected `type`
+     * matched a `query` in a header's `key` field.
+     */
+    queryHeaders(query, type) {
+      if (!this._definitionsReady) {
+        this._setDefinitions();
+      }
+      var headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
+      if (!headers || !headers.length) {
+        return [];
+      }
+      if (!query) {
+        return headers;
+      }
+      query = query.trim().toLowerCase();
+      if (!query) {
+        return headers;
+      }
+      return headers.filter(function(item) {
+        return item.key.toLowerCase().indexOf(query) !== -1;
+      });
+    }
+
+    /**
+     * Convinient function to look for a status code in the array.
+     *
+     * @param {Number} code The status code to look for.
+     * @return {Object|null} Status code definition or null if not found.
+     */
+    getStatusCode(code) {
+      if (!this._definitionsReady) {
+        this._setDefinitions();
+      }
+      var codes = this.statusCodes;
+      if (!codes || !codes.length) {
+        return null;
+      }
+      if (!code) {
+        return codes;
+      }
+      code = Number(code);
+      if (code !== code) {
+        console.warn('Passed code is not a number.');
+        return null;
+      }
+      var res = codes.filter((item) => item.key === code);
+      if (!res.length) {
+        return null;
+      }
+      return res[0];
+    }
+    /**
+     * A handler for the status headers query event
+     *
+     * @param {CustomEvent} e
+     */
+    _queryHeadersHandler(e) {
+      if (e.defaultPrevented) {
+        return;
+      }
+      this._stopEvent(e);
+      var type = e.detail.type;
+      if (!type) {
+        e.detail.headers = [];
+        return;
+      }
+      e.detail.headers = this.queryHeaders(e.detail.query, type);
+    }
+    /**
+     * A handler for the status code query event
+     *
+     * @param {CustomEvent} e
+     */
+    _queryCodesHandler(e) {
+      if (e.defaultPrevented) {
+        return;
+      }
+      this._stopEvent(e);
+      e.detail.statusCode = this.getStatusCode(e.detail.code);
+    }
+
+    _stopEvent(e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+  }
+  window.customElements.define(ArcDefinitions.is, ArcDefinitions);
   </script>
 </dom-module>
