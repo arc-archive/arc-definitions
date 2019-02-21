@@ -1,13 +1,4 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
 <head>
   <meta charset="utf-8">
@@ -16,15 +7,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <title>arc-definitions demo</title>
 
-  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-  <link rel="import" href="../../paper-input/paper-input.html">
-  <link rel="import" href="../../paper-radio-group/paper-radio-group.html">
-  <link rel="import" href="../../paper-radio-button/paper-radio-button.html">
-  <link rel="import" href="../../paper-button/paper-button.html">
-  <link rel="import" href="../arc-definitions.html">
+  <script type="module">
+    import '@polymer/polymer/lib/elements/dom-bind.js';
+    import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+    import '@polymer/iron-demo-helpers/demo-snippet.js';
+    import '@polymer/paper-input/paper-input.js';
+    import '@polymer/paper-radio-group/paper-radio-group.js';
+    import '@polymer/paper-radio-button/paper-radio-button.js';
+    import '@polymer/paper-button/paper-button.js';
+    import '../arc-definitions.js';
+  </script>
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -63,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-radio-button name="request">Request headers</paper-radio-button>
             <paper-radio-button name="response">Response headers</paper-radio-button>
           </paper-radio-group>
-          <paper-button raised id="queryButton">Query</paper-button>
+          <paper-button raised="" id="queryButton">Query</paper-button>
 
           <ul>
           <template is="dom-repeat" id="queryResults">
@@ -72,10 +66,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </ul>
 
           <script>
-            document.querySelector('#queryButton').addEventListener('tap', function() {
-              var type = document.querySelector('#type').selected;
-              var name = document.querySelector('#headerName').value;
-              var event = new CustomEvent('query-headers', {
+            document.querySelector('#queryButton').addEventListener('click', function() {
+              const type = document.querySelector('#type').selected;
+              const name = document.querySelector('#headerName').value;
+              const event = new CustomEvent('query-headers', {
                 'detail': {'type': type, 'query': name},
                 'bubbles': true
               });

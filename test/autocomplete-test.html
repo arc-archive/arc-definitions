@@ -1,21 +1,17 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <link rel="import" href="../arc-definitions.html">
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+  <script type="module" src="../arc-definitions.js"></script>
 </head>
 
 <body>
@@ -25,25 +21,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
-  /* global suite, test, fixture, assert */
+  <script type="module">
   suite('Autocomplete', function() {
-    var element;
-    var requestHeaders;
+    let element;
+    let requestHeaders;
     suiteSetup(function() {
       element = fixture('autocomplete');
       requestHeaders = element.requestHeaders;
     });
 
-    var headers = [
-      'Accept','Accept-Charset','Accept-Encoding','Accept-Language',
+    const headers = [
+      'Accept', 'Accept-Charset', 'Accept-Encoding', 'Accept-Language',
       'Cache-Control', 'Connection', 'Cookie', 'Content-Type', 'Expect', 'From',
       'Host', 'If-Match', 'If-None-Match', 'If-Range', 'Pragma', 'Range', 'Referer',
       'TE', 'Upgrade', 'User-Agent', 'Via', 'Warning'
     ];
 
     function findHeader(header) {
-      for (var i = 0, len = requestHeaders.length; i < len; i++) {
+      for (let i = 0, len = requestHeaders.length; i < len; i++) {
         if (requestHeaders[i].key === header) {
           return requestHeaders[i];
         }
@@ -52,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     headers.forEach(function(header) {
       test('Header ' + header + ' has autocomplete', function() {
-        var def = findHeader(header);
+        const def = findHeader(header);
         assert.typeOf(def.autocomplete, 'array');
         assert.isAbove(def.autocomplete.length, 0);
       });

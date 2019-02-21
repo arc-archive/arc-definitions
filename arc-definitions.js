@@ -1,4 +1,4 @@
-<!--
+/**
 @license
 Copyright 2018 The Advanced REST client authors
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -10,9 +10,10 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
--->
-<link rel="import" href="../polymer/polymer-element.html">
-<!--
+*/
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+/**
 Request / response information data used in ARC.
 Contains definitions for status codes and request and response headers.
 
@@ -107,13 +108,14 @@ let event = this.fire('query-headers', {
 });
 ```
 
-@group Logic Elements
-@element arc-definitions
+@customElement
+@polymer
 @demo demo/index.html
-@hero hero.svg
--->
-<dom-module id="arc-definitions">
-  <template>
+*/
+export class ArcDefinitions extends PolymerElement {
+  static get template() {
+    /* eslint-disable max-len */
+    return html`
     <style>
     :host {
       display: none;
@@ -129,28 +131,28 @@ let event = this.fire('query-headers', {
       {"key":"Authorization","desc":"Authentication credentials for HTTP authentication","example":"Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="},
       {"key":"Cache-Control","desc":"Used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain","example":"Cache-Control: no-cache","autocomplete":["no-cache","no-store","max-age=3600","max-stale","min-fresh=3600","no-transform","only-if-cached"]},
       {"key":"Connection","desc":"What type of connection the user-agent would prefer","example":"Connection: close","autocomplete": ["keep-alive","close"]},
-      {"key":"Cookie","desc":"an HTTP cookie previously sent by the server with Set-Cookie","example":"Cookie: $Version=1; Skin=new;","autocomplete":["name=value","name=value; name2=value2; name3=value3"]},
+      {"key":"Cookie","desc":"an HTTP cookie previously sent by the server with Set-Cookie","example":"Cookie: \$Version=1; Skin=new;","autocomplete":["name=value","name=value; name2=value2; name3=value3"]},
       {"key":"Content-Length","desc":"The length of the request body in octets (8-bit bytes)","example":"Content-Length: 348"},
       {"key":"Content-Type","desc":"The mime type of the body of the request (used with POST and PUT requests)","example":"Content-Type: application/x-www-form-urlencoded","autocomplete":["application/json","application/xml","application/atom+xml","multipart/form-data","multipart/alternative","multipart/mixed","application/x-www-form-urlencoded","application/base64","application/octet-stream","text/plain","text/css","text/html","application/javascript"]},
       {"key":"Date","desc":"The date and time that the message was sent","example":"Date: Tue, 15 Nov 1994 08:12:31 GMT"},
       {"key":"Expect","desc":"Indicates that particular server behaviors are required by the client","example":"Expect: 100-continue","autocomplete":["100-continue"]},
       {"key":"From","desc":"The email address of the user making the request","example":"From: user@example.com","autocomplete":["webmaster@example.org"]},
       {"key":"Host","desc":"The domain name of the server (for virtual hosting), mandatory since HTTP/1.1","example":"Host: en.wikipedia.org","autocomplete":["advancedrestclient.com"]},
-      {"key":"If-Match","desc":"Only perform the action if the client supplied entity matches the same entity on the server. This is mainly for methods like PUT to only update a resource if it has not been modified since the user last updated it.","example":"If-Match: \"737060cd8c284d8af7ad3082f209582d\"","autocomplete":["\"737060cd8c284d8af7ad3082f209582d\""]},
+      {"key":"If-Match","desc":"Only perform the action if the client supplied entity matches the same entity on the server. This is mainly for methods like PUT to only update a resource if it has not been modified since the user last updated it.","example":"If-Match: \\"737060cd8c284d8af7ad3082f209582d\\"","autocomplete":["\\"737060cd8c284d8af7ad3082f209582d\\""]},
       {"key":"If-Modified-Since","desc":"Allows a 304 Not Modified to be returned if content is unchanged","example":"If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT"},
-      {"key":"If-None-Match","desc":"Allows a 304 Not Modified to be returned if content is unchanged, see HTTP ETag","example":"If-None-Match: \"737060cd8c284d8af7ad3082f209582d\"","autocomplete":["\"737060cd8c284d8af7ad3082f209582d\""]},
-      {"key":"If-Range","desc":"If the entity is unchanged, send me the part(s) that I am missing; otherwise, send me the entire new entity","example":"If-Range: \"737060cd8c284d8af7ad3082f209582d\"","autocomplete":["\"737060cd8c284d8af7ad3082f209582d\""]},
+      {"key":"If-None-Match","desc":"Allows a 304 Not Modified to be returned if content is unchanged, see HTTP ETag","example":"If-None-Match: \\"737060cd8c284d8af7ad3082f209582d\\"","autocomplete":["\\"737060cd8c284d8af7ad3082f209582d\\""]},
+      {"key":"If-Range","desc":"If the entity is unchanged, send me the part(s) that I am missing; otherwise, send me the entire new entity","example":"If-Range: \\"737060cd8c284d8af7ad3082f209582d\\"","autocomplete":["\\"737060cd8c284d8af7ad3082f209582d\\""]},
       {"key":"If-Unmodified-Since","desc":"Only send the response if the entity has not been modified since a specific time.","example":"If-Unmodified-Since: Sat, 29 Oct 1994 19:43:31 GMT"},
       {"key":"Max-Forwards","desc":"Limit the number of times the message can be forwarded through proxies or gateways.","example":"Max-Forwards: 10"},
       {"key":"Pragma","desc":"Implementation-specific headers that may have various effects anywhere along the request-response chain","example":"Pragma: no-cache","autocomplete":["no-cache"]},
       {"key":"Proxy-Authorization","desc":"Authorization credentials for connecting to a proxy.","example":"Proxy-Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="},
       {"key":"Range","desc":"Request only part of an entity. Bytes are numbered from 0.","example":"Range: bytes=500-999","autocomplete":["bytes=0-999","bytes=200-1000, 2000-6576","bytes=200-1000, 2000-6576, 19000-"]},
       {"key":"Referer","desc":"This is the address of the previous web page from which a link to the currently requested page was followed.","example":"Referer: http://en.wikipedia.org/wiki/Main_Page","autocomplete":["https://advancedrestclient.com/"]},
-      {"key":"TE","desc":"The transfer encodings the user agent is willing to accept: the same values as for the response header Transfer-Encoding can be used, plus the \"trailers\" value (related to the \"chunked\" transfer method) to notify the server it accepts to receive additional headers (the trailers) after the last, zero-sized, chunk.","example":"TE: trailers, deflate","autocomplete":["compress","deflate","gzip","trailers","gzip, deflate;q=0.5"]},
+      {"key":"TE","desc":"The transfer encodings the user agent is willing to accept: the same values as for the response header Transfer-Encoding can be used, plus the \\"trailers\\" value (related to the \\"chunked\\" transfer method) to notify the server it accepts to receive additional headers (the trailers) after the last, zero-sized, chunk.","example":"TE: trailers, deflate","autocomplete":["compress","deflate","gzip","trailers","gzip, deflate;q=0.5"]},
       {"key":"Upgrade","desc":"Ask the server to upgrade to another protocol","example":"Upgrade: HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11","autocomplete":["h2c","websocket","TLS/1.0","TLS/1.0, HTTP/1.1"]},
       {"key":"User-Agent","desc":"The user agent string of the user agent","example":"User-Agent: Mozilla/5.0 (Linux; X11)","autocomplete":["Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0","Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41","Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1","Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)","Googlebot/2.1 (+http://www.google.com/bot.html)"]},
       {"key":"Via","desc":"Informs the server of proxies through which the request was sent.","example":"Via: 1.0 fred, 1.1 nowhere.com (Apache/1.1)","autocomplete":["1.1 vegur","HTTP/1.1 GWA","1.0 fred, 1.1 p.example.net"]},
-      {"key":"Warning","desc":"A general warning about possible problems with the entity body.","example":"Warning: 199 Miscellaneous warning","autocomplete":["110 anderson/1.3.37 \"Response is stale\"","112 - \"cache down\" \"Wed, 21 Oct 2015 07:28:00 GMT\""]}
+      {"key":"Warning","desc":"A general warning about possible problems with the entity body.","example":"Warning: 199 Miscellaneous warning","autocomplete":["110 anderson/1.3.37 \\"Response is stale\\"","112 - \\"cache down\\" \\"Wed, 21 Oct 2015 07:28:00 GMT\\""]}
      ],
      "responses": [
       {"key":"Accept-Ranges","desc":"What partial content range types this server supports","example":"Accept-Ranges: bytes"},
@@ -161,17 +163,17 @@ let event = this.fire('query-headers', {
       {"key":"Content-Language","desc":"The language the content is in","example":"Content-Language: da"},
       {"key":"Content-Length","desc":"The length of the response body in octets (8-bit bytes)","example":"Content-Length: 348"},
       {"key":"Content-Location","desc":"An alternate location for the returned data","example":"Content-Location: /index.htm"},
-      {"key":"Content-Disposition","desc":"An opportunity to raise a \"File Download\" dialogue box for a known MIME type","example":"Content-Disposition: attachment; filename=fname.ext"},
+      {"key":"Content-Disposition","desc":"An opportunity to raise a \\"File Download\\" dialogue box for a known MIME type","example":"Content-Disposition: attachment; filename=fname.ext"},
       {"key":"Content-MD5","desc":"A Base64-encoded binary MD5 sum of the content of the response","example":"Content-MD5: Q2hlY2sgSW50ZWdyaXR5IQ=="},
       {"key":"Content-Range","desc":"Where in a full body message this partial message belongs","example":"Content-Range: bytes 21010-47021/47022"},
       {"key":"Content-Type","desc":"The mime type of this content","example":"Content-Type: text/html; charset=utf-8"},
       {"key":"Date","desc":"The date and time that the message was sent","example":"Date: Tue, 15 Nov 1994 08:12:31 GMT"},
-      {"key":"ETag","desc":"An identifier for a specific version of a resource, often a Message Digest, see ETag","example":"ETag: \"737060cd8c284d8af7ad3082f209582d\""},
+      {"key":"ETag","desc":"An identifier for a specific version of a resource, often a Message Digest, see ETag","example":"ETag: \\"737060cd8c284d8af7ad3082f209582d\\""},
       {"key":"Expires","desc":"Gives the date/time after which the response is considered stale","example":"Expires: Thu, 01 Dec 1994 16:00:00 GMT"},
       {"key":"Last-Modified","desc":"The last modified date for the requested object, in RFC 2822 format","example":"Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT"},
-      {"key":"Link","desc":"Used to express a typed relationship with another resource, where the relation type is defined by RFC 5988","example":"Link: &lt;/feed&gt;; rel=\"alternate\""},
+      {"key":"Link","desc":"Used to express a typed relationship with another resource, where the relation type is defined by RFC 5988","example":"Link: &lt;/feed&gt;; rel=\\"alternate\\""},
       {"key":"Location","desc":"Used in redirection, or when a new resource has been created.","example":"Location: http://www.w3.org/pub/WWW/People.html"},
-      {"key":"P3P","desc":"This header is supposed to set P3P policy, in the form of P3P:CP=\"your_compact_policy\". However, P3P did not take off[2], most browsers have never fully implemented it, a lot of websites set this header with fake policy text, that was enough to fool browsers the existence of P3P policy and grant permissions for third party cookies.","example":"P3P: CP=\"This is not a P3P policy! See http://www.google.com/support/accounts/bin/answer.py?hl=en&answer=151657 for more info.\""},
+      {"key":"P3P","desc":"This header is supposed to set P3P policy, in the form of P3P:CP=\\"your_compact_policy\\". However, P3P did not take off[2], most browsers have never fully implemented it, a lot of websites set this header with fake policy text, that was enough to fool browsers the existence of P3P policy and grant permissions for third party cookies.","example":"P3P: CP=\\"This is not a P3P policy! See http://www.google.com/support/accounts/bin/answer.py?hl=en&answer=151657 for more info.\\""},
       {"key":"Pragma","desc":"Implementation-specific headers that may have various effects anywhere along the request-response chain.","example":"Pragma: no-cache"},
       {"key":"Proxy-Authenticate","desc":"Request authentication to access the proxy.","example":"Proxy-Authenticate: Basic"},
       {"key":"Refresh","desc":"Used in redirection, or when a new resource has been created. This refresh redirects after 5 seconds.(This is a proprietary/non-standard header extension introduced by Netscape and supported by most web browsers.)","example":"Refresh: 5; url=http://www.w3.org/pub/WWW/People.html"},
@@ -199,7 +201,7 @@ let event = this.fire('query-headers', {
       {"key":207, "label":"Multi-Status (WebDAV) (RFC 4918)","desc":"The message body that follows is an XML message and can contain a number of separate response codes, depending on how many sub-requests were made."},
       {"key":300, "label":"Multiple Choices","desc":"Indicates multiple options for the resource that the client may follow. It, for instance, could be used to present different format options for video, list files with different extensions, or word sense disambiguation."},
       {"key":301, "label":"Moved Permanently","desc":"This and all future requests should be directed to the given URI."},
-      {"key":302, "label":"Found","desc":"This is an example of industrial practice contradicting the standard. HTTP/1.0 specification (RFC 1945) required the client to perform a temporary redirect (the original describing phrase was \"Moved Temporarily\"), but popular browsers implemented 302 with the functionality of a 303 See Other. Therefore, HTTP/1.1 added status codes 303 and 307 to distinguish between the two behaviours. However, the majority of Web applications and frameworks still use the 302 status code as if it were the 303."},
+      {"key":302, "label":"Found","desc":"This is an example of industrial practice contradicting the standard. HTTP/1.0 specification (RFC 1945) required the client to perform a temporary redirect (the original describing phrase was \\"Moved Temporarily\\"), but popular browsers implemented 302 with the functionality of a 303 See Other. Therefore, HTTP/1.1 added status codes 303 and 307 to distinguish between the two behaviours. However, the majority of Web applications and frameworks still use the 302 status code as if it were the 303."},
       {"key":303, "label":"See Other (since HTTP/1.1)","desc":"The response to the request can be found under another URI using a GET method. When received in response to a PUT, it should be assumed that the server has received the data and the redirect should be issued with a separate GET message."},
       {"key":304, "label":"Not Modified","desc":"Indicates the resource has not been modified since last requested. Typically, the HTTP client provides a header like the If-Modified-Since header to provide a time against which to compare. Using this saves bandwidth and reprocessing on both the server and client, as only the header data must be sent and received in comparison to the entirety of the page being re-processed by the server, then sent again using more bandwidth of the server and client."},
       {"key":305, "label":"Use Proxy (since HTTP/1.1)","desc":"Many HTTP clients (such as Mozilla and Internet Explorer) do not correctly handle responses with this status code, primarily for security reasons."},
@@ -207,7 +209,7 @@ let event = this.fire('query-headers', {
       {"key":307, "label":"Temporary Redirect (since HTTP/1.1)","desc":"In this occasion, the request should be repeated with another URI, but future requests can still use the original URI. In contrast to 303, the request method should not be changed when reissuing the original request. For instance, a POST request must be repeated using another POST request."},
       {"key":400, "label":"Bad Request","desc":"The request cannot be fulfilled due to bad syntax."},
       {"key":401, "label":"Unauthorized","desc":"Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource. See Basic access authentication and Digest access authentication."},
-      {"key":402, "label":"Payment Required","desc":"Reserved for future use. The original intention was that this code might be used as part of some form of digital cash or micropayment scheme, but that has not happened, and this code is not usually used. As an example of its use, however, Apple's MobileMe service generates a 402 error (\"httpStatusCode:402\" in the Mac OS X Console log) if the MobileMe account is delinquent."},
+      {"key":402, "label":"Payment Required","desc":"Reserved for future use. The original intention was that this code might be used as part of some form of digital cash or micropayment scheme, but that has not happened, and this code is not usually used. As an example of its use, however, Apple's MobileMe service generates a 402 error (\\"httpStatusCode:402\\" in the Mac OS X Console log) if the MobileMe account is delinquent."},
       {"key":403, "label":"Forbidden","desc":"The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."},
       {"key":404, "label":"Not Found","desc":"The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."},
       {"key":405, "label":"Method Not Allowed","desc":"A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."},
@@ -227,7 +229,7 @@ let event = this.fire('query-headers', {
       {"key":422, "label":"Unprocessable Entity (WebDAV) (RFC 4918)","desc":"The request was well-formed but was unable to be followed due to semantic errors."},
       {"key":423, "label":"Locked (WebDAV) (RFC 4918)","desc":"The resource that is being accessed is locked."},
       {"key":424, "label":"Failed Dependency (WebDAV) (RFC 4918)","desc":"The request failed due to failure of a previous request (e.g. a PROPPATCH)."},
-      {"key":425, "label":"Unordered Collection (RFC 3648)","desc":"Defined in drafts of \"WebDAV Advanced Collections Protocol\", but not present in \"Web Distributed Authoring and Versioning (WebDAV) Ordered Collections Protocol\""},
+      {"key":425, "label":"Unordered Collection (RFC 3648)","desc":"Defined in drafts of \\"WebDAV Advanced Collections Protocol\\", but not present in \\"Web Distributed Authoring and Versioning (WebDAV) Ordered Collections Protocol\\""},
       {"key":426, "label":"Upgrade Required (RFC 2817)","desc":"The client should switch to a different protocol such as TLS/1.0."},
       {"key":444, "label":"No Response","desc":"An Nginx HTTP server extension. The server returns no information to the client and closes the connection (useful as a deterrent for malware)."},
       {"key":449, "label":"Retry With","desc":"A Microsoft extension. The request should be retried after performing the appropriate action."},
@@ -246,242 +248,240 @@ let event = this.fire('query-headers', {
      ]
     }
     </script>
-  </template>
-  <script>
-  class ArcDefinitions extends Polymer.Element {
-    static get is() {
-      return 'arc-definitions';
-    }
-    static get properties() {
-      return {
-        /**
-         * A list of request headers.
-         *
-         * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
-         * `desc` is a description of the header and `example` is an example of usage.
-         *
-         * ### Example
-         * ```
-         * [{
-         *  "key": "Accept",
-         *  "desc": "Content-Types that are acceptable.",
-         *  "example": "Accept: text/plain"
-         * }],
-         * ```
-         */
-        requestHeaders: {
-          type: Array,
-          notify: true,
-          readOnly: true
-        },
-        /**
-         * A list of response headers.
-         *
-         * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
-         * `desc` is a description of the header and `example` is an example of usage.
-         *
-         * ### Example
-         * ```
-         * [{
-         *  "key": "Age",
-         *  "desc": "The age the object has been in a proxy cache in seconds",
-         *  "example": "Age: 12"
-         * }],
-         * ```
-         */
-        responseHeaders: {
-          type: Array,
-          notify: true,
-          readOnly: true
-        },
-        /**
-         * A list of status codes definitions.
-         *
-         * Each object contains a `key`, `label` and `desc` property. `key` is a status code (as
-         * a number), `label` is a status code message and `desc` is description for the status
-         * code.
-         *
-         * ### Example
-         * ```
-         * [{
-         *  "key": 306,
-         *  "label": "Switch Proxy",
-         *  "desc": "No longer used."
-         * }]
-         */
-        statusCodes: {
-          type: Array,
-          notify: true,
-          readOnly: true
-        },
-        /**
-         * If set the element will not load definitions into the memory when it's
-         * created but rather when any data access function is called.
-         *
-         * This roperty is deprecated and will be removed in next major release
-         * version. New behavior will always prohibit loading definitions
-         * when component is ready.
-         * @deprecated
-         */
-        loadOnDemand: Boolean
-      };
-    }
-    /**
-     * @constructor
-     */
-    constructor() {
-      super();
-      this._queryHeadersHandler = this._queryHeadersHandler.bind(this);
-      this._queryCodesHandler = this._queryCodesHandler.bind(this);
-    }
+`;
+  }
 
-    ready() {
-      super.ready();
-      if (!this.loadOnDemand) {
-        this._setDefinitions();
-      }
-    }
+  static get is() {
+    return 'arc-definitions';
+  }
+  static get properties() {
+    return {
+      /**
+       * A list of request headers.
+       *
+       * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
+       * `desc` is a description of the header and `example` is an example of usage.
+       *
+       * ### Example
+       * ```
+       * [{
+       *  "key": "Accept",
+       *  "desc": "Content-Types that are acceptable.",
+       *  "example": "Accept: text/plain"
+       * }],
+       * ```
+       */
+      requestHeaders: {
+        type: Array,
+        notify: true,
+        readOnly: true
+      },
+      /**
+       * A list of response headers.
+       *
+       * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
+       * `desc` is a description of the header and `example` is an example of usage.
+       *
+       * ### Example
+       * ```
+       * [{
+       *  "key": "Age",
+       *  "desc": "The age the object has been in a proxy cache in seconds",
+       *  "example": "Age: 12"
+       * }],
+       * ```
+       */
+      responseHeaders: {
+        type: Array,
+        notify: true,
+        readOnly: true
+      },
+      /**
+       * A list of status codes definitions.
+       *
+       * Each object contains a `key`, `label` and `desc` property. `key` is a status code (as
+       * a number), `label` is a status code message and `desc` is description for the status
+       * code.
+       *
+       * ### Example
+       * ```
+       * [{
+       *  "key": 306,
+       *  "label": "Switch Proxy",
+       *  "desc": "No longer used."
+       * }]
+       */
+      statusCodes: {
+        type: Array,
+        notify: true,
+        readOnly: true
+      },
+      /**
+       * If set the element will not load definitions into the memory when it's
+       * created but rather when any data access function is called.
+       *
+       * This roperty is deprecated and will be removed in next major release
+       * version. New behavior will always prohibit loading definitions
+       * when component is ready.
+       * @deprecated
+       */
+      loadOnDemand: Boolean
+    };
+  }
+  /**
+   * @constructor
+   */
+  constructor() {
+    super();
+    this._queryHeadersHandler = this._queryHeadersHandler.bind(this);
+    this._queryCodesHandler = this._queryCodesHandler.bind(this);
+  }
 
-    connectedCallback() {
-      super.connectedCallback();
-      window.addEventListener('query-headers', this._queryHeadersHandler);
-      window.addEventListener('query-status-codes', this._queryCodesHandler);
-    }
-
-    disconnectedCallback() {
-      super.disconnectedCallback();
-      window.removeEventListener('query-headers', this._queryHeadersHandler);
-      window.removeEventListener('query-status-codes', this._queryCodesHandler);
-    }
-
-    _setDefinitions() {
-      var defs = JSON.parse(this.$.content.textContent);
-      this._setRequestHeaders(defs.requests);
-      this._setResponseHeaders(defs.responses);
-      this._setStatusCodes(defs.codes);
-      this._definitionsReady = true;
-    }
-
-    /**
-     * Queries for request headers that containins a `query`. If query is
-     * not set (value is falsy) then it returns all headers definitions array.
-     *
-     * @param {String} name A header name to look for. It will match a header
-     * where the header name contains the `name` param.
-     * @return {Array<Object>} Array of the request headers matched `name` in
-     * the header's `key` field.
-     */
-    queryRequestHeaders(name) {
-      return this.queryHeaders(name, 'request');
-    }
-
-    /**
-     * Queries for response headers that containins a `query`. If query is
-     * not set (value is falsy) then it returns all headers definitions array.
-     *
-     * @param {String} name A header name to look for. It will match a header where the header
-     * name contains the `name` param.
-     * @return {Array<Object>} Array of the response headers matched `name`
-     * in the header's `key` field.
-     */
-    queryResponseHeaders(name) {
-      return this.queryHeaders(name);
-    }
-
-    /**
-     * Queries for headers containin a `query`. If query is not set
-     * (value is falsy) then it returns all headers definitions array.
-     *
-     * @param {String} query A query to search for in the `key` field of the
-     * headers array.
-     * @param {String} type If this equals `request` then it will look in the
-     * request headers array. In the response headers list otherwise.
-     * @return {Array<Object>} Array of the headers of selected `type`
-     * matched a `query` in a header's `key` field.
-     */
-    queryHeaders(query, type) {
-      if (!this._definitionsReady) {
-        this._setDefinitions();
-      }
-      var headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
-      if (!headers || !headers.length) {
-        return [];
-      }
-      if (!query) {
-        return headers;
-      }
-      query = query.trim().toLowerCase();
-      if (!query) {
-        return headers;
-      }
-      return headers.filter(function(item) {
-        return item.key.toLowerCase().indexOf(query) !== -1;
-      });
-    }
-
-    /**
-     * Convinient function to look for a status code in the array.
-     *
-     * @param {Number} code The status code to look for.
-     * @return {Object|null} Status code definition or null if not found.
-     */
-    getStatusCode(code) {
-      if (!this._definitionsReady) {
-        this._setDefinitions();
-      }
-      var codes = this.statusCodes;
-      if (!codes || !codes.length) {
-        return null;
-      }
-      if (!code) {
-        return codes;
-      }
-      code = Number(code);
-      if (code !== code) {
-        console.warn('Passed code is not a number.');
-        return null;
-      }
-      var res = codes.filter((item) => item.key === code);
-      if (!res.length) {
-        return null;
-      }
-      return res[0];
-    }
-    /**
-     * A handler for the status headers query event
-     *
-     * @param {CustomEvent} e
-     */
-    _queryHeadersHandler(e) {
-      if (e.defaultPrevented) {
-        return;
-      }
-      this._stopEvent(e);
-      var type = e.detail.type;
-      if (!type) {
-        e.detail.headers = [];
-        return;
-      }
-      e.detail.headers = this.queryHeaders(e.detail.query, type);
-    }
-    /**
-     * A handler for the status code query event
-     *
-     * @param {CustomEvent} e
-     */
-    _queryCodesHandler(e) {
-      if (e.defaultPrevented) {
-        return;
-      }
-      this._stopEvent(e);
-      e.detail.statusCode = this.getStatusCode(e.detail.code);
-    }
-
-    _stopEvent(e) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
+  ready() {
+    super.ready();
+    if (!this.loadOnDemand) {
+      this._setDefinitions();
     }
   }
-  window.customElements.define(ArcDefinitions.is, ArcDefinitions);
-  </script>
-</dom-module>
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('query-headers', this._queryHeadersHandler);
+    window.addEventListener('query-status-codes', this._queryCodesHandler);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('query-headers', this._queryHeadersHandler);
+    window.removeEventListener('query-status-codes', this._queryCodesHandler);
+  }
+
+  _setDefinitions() {
+    const defs = JSON.parse(this.$.content.textContent);
+    this._setRequestHeaders(defs.requests);
+    this._setResponseHeaders(defs.responses);
+    this._setStatusCodes(defs.codes);
+    this._definitionsReady = true;
+  }
+
+  /**
+   * Queries for request headers that containins a `query`. If query is
+   * not set (value is falsy) then it returns all headers definitions array.
+   *
+   * @param {String} name A header name to look for. It will match a header
+   * where the header name contains the `name` param.
+   * @return {Array<Object>} Array of the request headers matched `name` in
+   * the header's `key` field.
+   */
+  queryRequestHeaders(name) {
+    return this.queryHeaders(name, 'request');
+  }
+
+  /**
+   * Queries for response headers that containins a `query`. If query is
+   * not set (value is falsy) then it returns all headers definitions array.
+   *
+   * @param {String} name A header name to look for. It will match a header where the header
+   * name contains the `name` param.
+   * @return {Array<Object>} Array of the response headers matched `name`
+   * in the header's `key` field.
+   */
+  queryResponseHeaders(name) {
+    return this.queryHeaders(name);
+  }
+
+  /**
+   * Queries for headers containin a `query`. If query is not set
+   * (value is falsy) then it returns all headers definitions array.
+   *
+   * @param {String} query A query to search for in the `key` field of the
+   * headers array.
+   * @param {String} type If this equals `request` then it will look in the
+   * request headers array. In the response headers list otherwise.
+   * @return {Array<Object>} Array of the headers of selected `type`
+   * matched a `query` in a header's `key` field.
+   */
+  queryHeaders(query, type) {
+    if (!this._definitionsReady) {
+      this._setDefinitions();
+    }
+    const headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
+    if (!headers || !headers.length) {
+      return [];
+    }
+    if (!query) {
+      return headers;
+    }
+    query = query.trim().toLowerCase();
+    if (!query) {
+      return headers;
+    }
+    return headers.filter(function(item) {
+      return item.key.toLowerCase().indexOf(query) !== -1;
+    });
+  }
+
+  /**
+   * Convinient function to look for a status code in the array.
+   *
+   * @param {Number} code The status code to look for.
+   * @return {Object|null} Status code definition or null if not found.
+   */
+  getStatusCode(code) {
+    if (!this._definitionsReady) {
+      this._setDefinitions();
+    }
+    const codes = this.statusCodes;
+    if (!codes || !codes.length) {
+      return null;
+    }
+    if (!code) {
+      return codes;
+    }
+    code = Number(code);
+    if (code !== code) {
+      console.warn('Passed code is not a number.');
+      return null;
+    }
+    const res = codes.filter((item) => item.key === code);
+    if (!res.length) {
+      return null;
+    }
+    return res[0];
+  }
+  /**
+   * A handler for the status headers query event
+   *
+   * @param {CustomEvent} e
+   */
+  _queryHeadersHandler(e) {
+    if (e.defaultPrevented) {
+      return;
+    }
+    this._stopEvent(e);
+    const type = e.detail.type;
+    if (!type) {
+      e.detail.headers = [];
+      return;
+    }
+    e.detail.headers = this.queryHeaders(e.detail.query, type);
+  }
+  /**
+   * A handler for the status code query event
+   *
+   * @param {CustomEvent} e
+   */
+  _queryCodesHandler(e) {
+    if (e.defaultPrevented) {
+      return;
+    }
+    this._stopEvent(e);
+    e.detail.statusCode = this.getStatusCode(e.detail.code);
+  }
+
+  _stopEvent(e) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+  }
+}
+window.customElements.define(ArcDefinitions.is, ArcDefinitions);

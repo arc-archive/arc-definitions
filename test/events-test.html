@@ -1,23 +1,17 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
-  <link rel="import" href="../arc-definitions.html">
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+  <script type="module" src="../arc-definitions.js"></script>
 </head>
 
 <body>
@@ -26,105 +20,142 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <arc-definitions></arc-definitions>
     </template>
   </test-fixture>
-  <script>
+
+  <script type="module">
   function fire(type, detail, node) {
-    var event = new CustomEvent(type, {
+    const e = new CustomEvent(type, {
       detail: detail,
       bubbles: true,
       composed: true,
       cancelable: true
     });
-    (node || document).dispatchEvent(event);
-    return event;
+    (node || document.body).dispatchEvent(e);
+    return e;
   }
   /* global fixture, assert */
   suite('basic', function() {
-    var element;
-
-    setup(function() {
-      element = fixture('basic');
-    });
-
     test('query request headers', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         type: 'request',
         query: 'Content'
       };
-      var event = fire('query-headers', detail);
-      var results = event.detail.headers;
+      const event = fire('query-headers', detail);
+      const results = event.detail.headers;
       assert.isAbove(results.length, 0);
     });
 
     test('query request headers without query property', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         type: 'request'
       };
-      var event = fire('query-headers', detail);
-      var results = event.detail.headers;
+      const event = fire('query-headers', detail);
+      const results = event.detail.headers;
       assert.isAbove(results.length, 0);
     });
 
     test('query response headers', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         type: 'response',
         query: 'Content'
       };
-      var event = fire('query-headers', detail);
-      var results = event.detail.headers;
+      const event = fire('query-headers', detail);
+      const results = event.detail.headers;
       assert.isAbove(results.length, 0);
     });
 
     test('query response headers without query property', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         type: 'response'
       };
-      var event = fire('query-headers', detail);
-      var results = event.detail.headers;
+      const event = fire('query-headers', detail);
+      const results = event.detail.headers;
       assert.isAbove(results.length, 0);
     });
 
     test('headers query empty results should be array', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         type: 'response',
         query: 'abcdefghij'
       };
-      var event = fire('query-headers', detail);
-      var results = event.detail.headers;
+      const event = fire('query-headers', detail);
+      const results = event.detail.headers;
       assert.lengthOf(results, 0);
     });
 
     test('headers query is canceled', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         type: 'response'
       };
-      var event = fire('query-headers', detail);
+      const event = fire('query-headers', detail);
       assert.isTrue(event.defaultPrevented);
     });
 
     test('status code query returns a value', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         code: 200
       };
-      var event = fire('query-status-codes', detail);
-      var value = event.detail.statusCode;
+      const event = fire('query-status-codes', detail);
+      const value = event.detail.statusCode;
       assert.equal(value.key, 200);
     });
 
     test('status code query returns null if not found', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         code: 900
       };
-      var event = fire('query-status-codes', detail);
-      var value = event.detail.statusCode;
+      const event = fire('query-status-codes', detail);
+      const value = event.detail.statusCode;
       assert.strictEqual(value, null);
     });
 
     test('status code query is canceled', function() {
-      var detail = {
+      fixture('basic');
+      const detail = {
         code: 200
       };
-      var event = fire('query-status-codes', detail);
+      const event = fire('query-status-codes', detail);
       assert.isTrue(event.defaultPrevented);
+    });
+
+    test('Ignores canceled query event', () => {
+      document.body.addEventListener('query-headers', function f(e) {
+        document.body.removeEventListener('query-headers', f);
+        e.preventDefault();
+      });
+      fixture('basic');
+      const detail = {
+        type: 'response'
+      };
+      const e = fire('query-headers', detail);
+      assert.isUndefined(e.detail.headers);
+    });
+
+    test('Sets empty array when no type', () => {
+      fixture('basic');
+      const detail = {};
+      const e = fire('query-headers', detail);
+      assert.lengthOf(e.detail.headers, 0);
+    });
+
+    test('Ignores status code query when canceled', function() {
+      document.body.addEventListener('query-status-codes', function f(e) {
+        document.body.removeEventListener('query-status-codes', f);
+        e.preventDefault();
+      });
+      fixture('basic');
+      const detail = {
+        code: 200
+      };
+      const e = fire('query-status-codes', detail);
+      assert.isUndefined(e.statusCode);
     });
   });
   </script>

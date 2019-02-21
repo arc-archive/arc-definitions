@@ -1,22 +1,41 @@
 {
-  "name": "@advanced-rest-client/arc-definitions",
-  "version": "2.0.2",
-  "license": "Apache-2.0 OR CC-BY-4.0",
   "description": "Internal data definitions used in ARC. Contains definitions for status codes and request and response headers.",
-  "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.6.1"
-  },
-  "private": false,
-  "main": "arc-definitions.html",
-  "author": "The Advanced REST client authors",
-  "scripts": {
-    "lint": "node_modules/.bin/polymer lint arc-definitions.html",
-    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"arc-definitions:local-test\"",
-    "test": "node_modules/.bin/polymer test --plugin local",
-    "update-types": "bower install && gen-typescript-declarations --deleteExisting --outDir ."
-  },
+  "keywords": [
+    "web-components",
+    "polymer",
+    "data",
+    "definitions"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/advanced-rest-client/arc-definitions.git"
+  },
+  "name": "@advanced-rest-client/arc-definitions",
+  "version": "3.0.0-preview.1",
+  "license": "Apache-2.0 OR CC-BY-4.0",
+  "devDependencies": {
+    "@polymer/gen-typescript-declarations": "^1.6.1",
+    "@polymer/iron-demo-helpers": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@polymer/paper-radio-button": "^3.0.0",
+    "@polymer/paper-radio-group": "^3.0.0",
+    "@polymer/paper-input": "^3.0.0",
+    "@polymer/paper-button": "^3.0.0",
+    "@polymer/test-fixture": "^4.0.2",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.3",
+    "wct-mocha": "^1.0.0"
+  },
+  "main": "arc-definitions.js",
+  "author": "The Advanced REST client authors",
+  "scripts": {
+    "lint": "polymer lint arc-definitions.html",
+    "test-sauce": "polymer test --plugin sauce --job-name \"arc-definitions:local-test\"",
+    "test": "polymer test --plugin local",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
+  },
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0"
   }
 }
