@@ -1,22 +1,75 @@
 {
   "name": "@advanced-rest-client/arc-definitions",
-  "version": "2.0.2",
-  "license": "Apache-2.0 OR CC-BY-4.0",
   "description": "Internal data definitions used in ARC. Contains definitions for status codes and request and response headers.",
-  "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.6.1"
-  },
-  "private": false,
-  "main": "arc-definitions.html",
-  "author": "The Advanced REST client authors",
-  "scripts": {
-    "lint": "node_modules/.bin/polymer lint arc-definitions.html",
-    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"arc-definitions:local-test\"",
-    "test": "node_modules/.bin/polymer test --plugin local",
-    "update-types": "bower install && gen-typescript-declarations --deleteExisting --outDir ."
-  },
+  "version": "3.0.0",
+  "license": "Apache-2.0",
+  "main": "arc-definitions.js",
+  "keywords": [
+    "web-components",
+    "data",
+    "definitions",
+    "headers",
+    "status-code"
+  ],
+  "authors": [
+    "Pawel Psztyc",
+    "The Advanced REST client authors <arc@mulesoft.com>"
+  ],
+  "contributors": [
+    "Pawel Psztyc",
+    "The Advanced REST client authors <arc@mulesoft.com>"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/advanced-rest-client/arc-definitions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/advanced-rest-client/arc-definitions/issues",
+    "email": "arc@mulesoft.com"
+  },
+  "devDependencies": {
+    "@advanced-rest-client/arc-demo-helper": "^1.0.8",
+    "@advanced-rest-client/eslint-config": "^1.0.6",
+    "@advanced-rest-client/prettier-config": "^0.1.0",
+    "@advanced-rest-client/testing-karma-sl": "^1.0.2",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^7.0.0",
+    "@open-wc/testing": "^2.2.1",
+    "@open-wc/testing-karma": "^3.1.5",
+    "@polymer/gen-typescript-declarations": "^1.6.2",
+    "@polymer/paper-button": "^3.0.0",
+    "@polymer/paper-input": "^3.0.2",
+    "@polymer/paper-radio-button": "^3.0.0",
+    "@polymer/paper-radio-group": "^3.0.0",
+    "deepmerge": "^4.0.0",
+    "es-dev-server": "^1.8.3",
+    "husky": "^1.0.0",
+    "karma": "^4.2.0",
+    "lint-staged": "^8.0.0",
+    "sinon": "^7.3.2",
+    "lit-element": "^2.2.1"
+  },
+  "scripts": {
+    "test": "karma start --coverage",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir .",
+    "start": "es-dev-server --app-index demo/index.html --node-resolve --open --watch",
+    "start:compatibility": "es-dev-server --app-index demo/index.html --compatibility all --node-resolve --open --watch",
+    "lint:eslint": "eslint --ext .js,.html .",
+    "format:eslint": "eslint --ext .js,.html . --fix",
+    "lint:prettier": "prettier \"**/*.js\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
+    "format:prettier": "prettier \"**/*.js\" --write",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "test:watch": "karma start --auto-watch=true --single-run=false",
+    "test:legacy": "karma start --legacy --coverage",
+    "test:legacy:watch": "karma start --legacy --auto-watch=true --single-run=false",
+    "test:sl": "karma start karma.sl.config.js --legacy --coverage",
+    "generate-model": "node demo/model.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
