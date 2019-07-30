@@ -11,117 +11,15 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
-import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
-import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
 /**
-Request / response information data used in ARC.
-Contains definitions for status codes and request and response headers.
-
-The fileds may be empty when not yet initialized.
-
-The `<arc-definitions>` element listens at its nearest shadow root boundary for query events.
-Other elements can send the `query-headers` and `query-status-codes` events that will be
-handled by this element. Events will be stopped from propagation. Event returned value will
-contain the data.
-
-### Example
-```
-<arc-definitions
-  requests="{{requestsDefinitions}}"
-  responses="{{responsesDefinitions}}"
-  status-codes="{{statusCodesDefinitions}}"></arc-definitions>
-```
-
-### Firing events Example
-
-```javascript
-// Polymer 1.x
-let event = this.fire('query-headers', {
-  'type': 'request', // or response, mandatory
-  'query': 'Acce' // finds all request headers containing `acce` in their name
-}, {
-  cancelable: true
-});
-console.log(event.defaultPrevented); // true
-let headers = event.detail.headers;  // Array[]
-```
-
-```javascript
-// Vanilla JavaScript
-var event = new CustomEvent('query-headers', {
-  detail: {
-    'type': 'request',
-    'query': 'Acce'
-  },
-  bubbles: true,
-  composed: true,
-  cancelable: true
-});
-document.body.dispatchEvent(event);
-console.log(event.defaultPrevented); // true
-let headers = event.detail.headers;  // Array[]
-```
-
-```javascript
-let event = this.fire('query-status-codes', {
-  'code': 200
-}, {
-  cancelable: true
-});
-console.log(event.defaultPrevented); // true
-let statusCode = event.detail.statusCode;  // Array[]
-```
-
-```javascript
-// Vanilla JavaScript
-var event = new CustomEvent('query-status-codes', {
-  detail: {
-    'code': 200
-  },
-  bubbles: true,
-  composed: true,
-  cancelable: true
-});
-document.body.dispatchEvent(event);
-console.log(event.defaultPrevented); // true
-let statusCode = event.detail.statusCode; // Array[]
-```
-
-The event should be cancellable so the element can cancel it and other
-instances of this element will not handle it again. Though it's not an error
-dispatching this event as not cancelable.
-
-If the element was handled by the element and the event is cancelable then
-event's `defaultPrevented` flag is set to `true`.
-
-If query event do not contain query value then all values for given query type
-will be returned.
-
-For example following event returns all request headers
-
-```javascript
-let event = this.fire('query-headers', {
-  'type': 'request',
-  'query': '' // it might be not defined.
-}, {
-  cancelable: true
-});
-```
-
+Request / response headers and status codes definitions database used in Adavanced REST Client and API Console.
 @customElement
-@polymer
 @demo demo/index.html
 */
-export class ArcDefinitions extends PolymerElement {
-  static get template() {
+export class ArcDefinitions extends HTMLElement {
+  static get _dataTemplate() {
     /* eslint-disable max-len */
-    return html`
-    <style>
-    :host {
-      display: none;
-    }
-    </style>
-    <script id="content" type="application/json">
+    const data = `
     {
      "requests":[
       {"key":"Accept","desc":"Content-Types that are acceptable.","example":"Accept: text/plain","autocomplete":["application/json","application/xml","text/plain","application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8","image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, application/x-shockwave-flash, application/msword, */*","text/html, application/xhtml+xml, image/jxr, */*","text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1","*/*","image/webp,image/*,*/*;q=0.8", "image/png,image/svg+xml,image/*;q=0.8, */*;q=0.5","audio/webm, audio/ogg, audio/wav, audio/*;q=0.9, application/ogg;q=0.7, video/*;q=0.6;*/*;q=0.5","audio/webm,audio/ogg,audio/wav,audio/*;q=0.9,application/ogg;q=0.7,video/*;q=0.6,*/*;q=0.5", "application/javascript, */*;q=0.8","text/css,*/*;q=0.1"]},
@@ -131,7 +29,7 @@ export class ArcDefinitions extends PolymerElement {
       {"key":"Authorization","desc":"Authentication credentials for HTTP authentication","example":"Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="},
       {"key":"Cache-Control","desc":"Used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain","example":"Cache-Control: no-cache","autocomplete":["no-cache","no-store","max-age=3600","max-stale","min-fresh=3600","no-transform","only-if-cached"]},
       {"key":"Connection","desc":"What type of connection the user-agent would prefer","example":"Connection: close","autocomplete": ["keep-alive","close"]},
-      {"key":"Cookie","desc":"an HTTP cookie previously sent by the server with Set-Cookie","example":"Cookie: \$Version=1; Skin=new;","autocomplete":["name=value","name=value; name2=value2; name3=value3"]},
+      {"key":"Cookie","desc":"an HTTP cookie previously sent by the server with Set-Cookie","example":"Cookie: $Version=1; Skin=new;","autocomplete":["name=value","name=value; name2=value2; name3=value3"]},
       {"key":"Content-Length","desc":"The length of the request body in octets (8-bit bytes)","example":"Content-Length: 348"},
       {"key":"Content-Type","desc":"The mime type of the body of the request (used with POST and PUT requests)","example":"Content-Type: application/x-www-form-urlencoded","autocomplete":["application/json","application/xml","application/atom+xml","multipart/form-data","multipart/alternative","multipart/mixed","application/x-www-form-urlencoded","application/base64","application/octet-stream","text/plain","text/css","text/html","application/javascript"]},
       {"key":"Date","desc":"The date and time that the message was sent","example":"Date: Tue, 15 Nov 1994 08:12:31 GMT"},
@@ -246,87 +144,82 @@ export class ArcDefinitions extends PolymerElement {
       {"key":509, "label":"Bandwidth Limit Exceeded (Apache bw/limited extension)","desc":"This status code, while used by many servers, is not specified in any RFCs."},
       {"key":510, "label":"Not Extended (RFC 2774)","desc":"Further extensions to the request are required for the server to fulfill it."}
      ]
-    }
-    </script>
-`;
+    }`;
+    const tpl = document.createElement('template');
+    tpl.innerHTML = data;
+    return tpl;
   }
-
-  static get is() {
-    return 'arc-definitions';
+  /**
+   * A list of request headers.
+   *
+   * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
+   * `desc` is a description of the header and `example` is an example of usage.
+   *
+   * ### Example
+   * ```
+   * [{
+   *  "key": "Accept",
+   *  "desc": "Content-Types that are acceptable.",
+   *  "example": "Accept: text/plain"
+   * }],
+   * ```
+   *
+   * Note, this property won't notify parent component when this property is set
+   * so 2-way data binding won't work with this property.
+   *
+   * @type {Array<Object>}
+   */
+  get requestHeaders() {
+    this._setDefinitions();
+    return this._requestHeaders;
   }
-  static get properties() {
-    return {
-      /**
-       * A list of request headers.
-       *
-       * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
-       * `desc` is a description of the header and `example` is an example of usage.
-       *
-       * ### Example
-       * ```
-       * [{
-       *  "key": "Accept",
-       *  "desc": "Content-Types that are acceptable.",
-       *  "example": "Accept: text/plain"
-       * }],
-       * ```
-       */
-      requestHeaders: {
-        type: Array,
-        notify: true,
-        readOnly: true
-      },
-      /**
-       * A list of response headers.
-       *
-       * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
-       * `desc` is a description of the header and `example` is an example of usage.
-       *
-       * ### Example
-       * ```
-       * [{
-       *  "key": "Age",
-       *  "desc": "The age the object has been in a proxy cache in seconds",
-       *  "example": "Age: 12"
-       * }],
-       * ```
-       */
-      responseHeaders: {
-        type: Array,
-        notify: true,
-        readOnly: true
-      },
-      /**
-       * A list of status codes definitions.
-       *
-       * Each object contains a `key`, `label` and `desc` property. `key` is a status code (as
-       * a number), `label` is a status code message and `desc` is description for the status
-       * code.
-       *
-       * ### Example
-       * ```
-       * [{
-       *  "key": 306,
-       *  "label": "Switch Proxy",
-       *  "desc": "No longer used."
-       * }]
-       */
-      statusCodes: {
-        type: Array,
-        notify: true,
-        readOnly: true
-      },
-      /**
-       * If set the element will not load definitions into the memory when it's
-       * created but rather when any data access function is called.
-       *
-       * This roperty is deprecated and will be removed in next major release
-       * version. New behavior will always prohibit loading definitions
-       * when component is ready.
-       * @deprecated
-       */
-      loadOnDemand: Boolean
-    };
+  /**
+   * A list of response headers.
+   *
+   * Each object contains a `key`, `desc` and `example` property. `key` is a header name,
+   * `desc` is a description of the header and `example` is an example of usage.
+   *
+   * ### Example
+   * ```
+   * [{
+   *  "key": "Age",
+   *  "desc": "The age the object has been in a proxy cache in seconds",
+   *  "example": "Age: 12"
+   * }],
+   * ```
+   *
+   * Note, this property won't notify parent component when this property is set
+   * so 2-way data binding won't work with this property.
+   *
+   * @type {Array<Object>}
+   */
+  get responseHeaders() {
+    this._setDefinitions();
+    return this._responseHeaders;
+  }
+  /**
+   * A list of status codes definitions.
+   *
+   * Each object contains a `key`, `label` and `desc` property. `key` is a status code (as
+   * a number), `label` is a status code message and `desc` is description for the status
+   * code.
+   *
+   * ### Example
+   * ```
+   * [{
+   *  "key": 306,
+   *  "label": "Switch Proxy",
+   *  "desc": "No longer used."
+   * }]
+   *
+   * Note, this property won't notify parent component when this property is set
+   * so 2-way data binding won't work with this property.
+   *
+   * @type {Array<Object>}
+   */
+  get statusCodes() {
+    this._setDefinitions();
+    return this._statusCodes;
   }
   /**
    * @constructor
@@ -337,31 +230,31 @@ export class ArcDefinitions extends PolymerElement {
     this._queryCodesHandler = this._queryCodesHandler.bind(this);
   }
 
-  ready() {
-    super.ready();
-    if (!this.loadOnDemand) {
-      this._setDefinitions();
+  connectedCallback() {
+    window.addEventListener('query-headers', this._queryHeadersHandler);
+    window.addEventListener('query-status-codes', this._queryCodesHandler);
+    if (!this.hasAttribute('aria-hidden')) {
+      this.setAttribute('aria-hidden', 'true');
     }
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener('query-headers', this._queryHeadersHandler);
-    window.addEventListener('query-status-codes', this._queryCodesHandler);
-  }
-
   disconnectedCallback() {
-    super.disconnectedCallback();
     window.removeEventListener('query-headers', this._queryHeadersHandler);
     window.removeEventListener('query-status-codes', this._queryCodesHandler);
   }
-
+  /**
+   * Translates tempolate data into a corresponding values structure.
+   */
   _setDefinitions() {
-    const defs = JSON.parse(this.$.content.textContent);
-    this._setRequestHeaders(defs.requests);
-    this._setResponseHeaders(defs.responses);
-    this._setStatusCodes(defs.codes);
+    if (this._definitionsReady) {
+      return;
+    }
     this._definitionsReady = true;
+    const tpl = ArcDefinitions._dataTemplate;
+    const defs = JSON.parse(tpl.content.textContent);
+    this._requestHeaders = defs.requests;
+    this._responseHeaders = defs.responses;
+    this._statusCodes = defs.codes;
   }
 
   /**
@@ -387,7 +280,7 @@ export class ArcDefinitions extends PolymerElement {
    * in the header's `key` field.
    */
   queryResponseHeaders(name) {
-    return this.queryHeaders(name);
+    return this.queryHeaders(name, 'response');
   }
 
   /**
@@ -397,25 +290,16 @@ export class ArcDefinitions extends PolymerElement {
    * @param {String} query A query to search for in the `key` field of the
    * headers array.
    * @param {String} type If this equals `request` then it will look in the
-   * request headers array. In the response headers list otherwise.
+   * request headers array. Is the response headers list otherwise.
    * @return {Array<Object>} Array of the headers of selected `type`
    * matched a `query` in a header's `key` field.
    */
   queryHeaders(query, type) {
-    if (!this._definitionsReady) {
-      this._setDefinitions();
-    }
     const headers = type === 'request' ? this.requestHeaders : this.responseHeaders;
-    if (!headers || !headers.length) {
-      return [];
-    }
     if (!query) {
       return headers;
     }
     query = query.trim().toLowerCase();
-    if (!query) {
-      return headers;
-    }
     return headers.filter(function(item) {
       return item.key.toLowerCase().indexOf(query) !== -1;
     });
@@ -425,22 +309,15 @@ export class ArcDefinitions extends PolymerElement {
    * Convinient function to look for a status code in the array.
    *
    * @param {Number} code The status code to look for.
-   * @return {Object|null} Status code definition or null if not found.
+   * @return {Object|Array<Object>|null} Status code definition or null if not found.
    */
   getStatusCode(code) {
-    if (!this._definitionsReady) {
-      this._setDefinitions();
-    }
     const codes = this.statusCodes;
-    if (!codes || !codes.length) {
-      return null;
-    }
     if (!code) {
       return codes;
     }
     code = Number(code);
     if (code !== code) {
-      console.warn('Passed code is not a number.');
       return null;
     }
     const res = codes.filter((item) => item.key === code);
@@ -484,4 +361,4 @@ export class ArcDefinitions extends PolymerElement {
     e.preventDefault();
   }
 }
-window.customElements.define(ArcDefinitions.is, ArcDefinitions);
+window.customElements.define('arc-definitions', ArcDefinitions);
