@@ -1,10 +1,10 @@
 import { fixture, assert } from '@open-wc/testing';
-import sinon from 'sinon/pkg/sinon-esm.js';
+import * as sinon from 'sinon';
 import '../arc-definitions.js';
 
-describe('<arc-definitions>', function() {
+describe('<arc-definitions>', () => {
   async function basicFixture() {
-    return (await fixture(`<arc-definitions></arc-definitions>`));
+    return fixture(`<arc-definitions></arc-definitions>`);
   }
 
   describe('requestHeaders getter', () => {
@@ -18,16 +18,13 @@ describe('<arc-definitions>', function() {
       assert.typeOf(result, 'array', 'returns an array');
       assert.notEmpty(result, 'is not empty array');
       const keys = Object.keys(result[0]);
-      assert.deepEqual(keys, ['key', 'desc', 'example', 'autocomplete'], 'is headers struct');
+      assert.deepEqual(
+        keys,
+        ['key', 'desc', 'example', 'autocomplete'],
+        'is headers struct'
+      );
       const index = result.findIndex((item) => item.key === 'Accept');
       assert.notEqual(index, -1, 'List has request header');
-    });
-
-    it('calls _setDefinitions()', () => {
-      const spy = sinon.spy(element, '_setDefinitions');
-      const result = element.requestHeaders;
-      assert.typeOf(result, 'array');
-      assert.isTrue(spy.called);
     });
   });
 
@@ -46,13 +43,6 @@ describe('<arc-definitions>', function() {
       const index = result.findIndex((item) => item.key === 'Accept-Ranges');
       assert.notEqual(index, -1, 'List has response header');
     });
-
-    it('calls _setDefinitions()', () => {
-      const spy = sinon.spy(element, '_setDefinitions');
-      const result = element.responseHeaders;
-      assert.typeOf(result, 'array');
-      assert.isTrue(spy.called);
-    });
   });
 
   describe('statusCodes getter', () => {
@@ -68,16 +58,9 @@ describe('<arc-definitions>', function() {
       const keys = Object.keys(result[0]);
       assert.deepEqual(keys, ['key', 'label', 'desc'], 'is headers struct');
     });
-
-    it('calls _setDefinitions()', () => {
-      const spy = sinon.spy(element, '_setDefinitions');
-      const result = element.statusCodes;
-      assert.typeOf(result, 'array');
-      assert.isTrue(spy.called);
-    });
   });
 
-  describe('Autocomplete', function() {
+  describe('Autocomplete', () => {
     let element;
     let requestHeaders;
     before(async () => {
@@ -86,22 +69,36 @@ describe('<arc-definitions>', function() {
     });
 
     const headers = [
-      'Accept', 'Accept-Charset', 'Accept-Encoding', 'Accept-Language',
-      'Cache-Control', 'Connection', 'Cookie', 'Content-Type', 'Expect', 'From',
-      'Host', 'If-Match', 'If-None-Match', 'If-Range', 'Pragma', 'Range', 'Referer',
-      'TE', 'Upgrade', 'User-Agent', 'Via', 'Warning'
+      'Accept',
+      'Accept-Charset',
+      'Accept-Encoding',
+      'Accept-Language',
+      'Cache-Control',
+      'Connection',
+      'Cookie',
+      'Content-Type',
+      'Expect',
+      'From',
+      'Host',
+      'If-Match',
+      'If-None-Match',
+      'If-Range',
+      'Pragma',
+      'Range',
+      'Referer',
+      'TE',
+      'Upgrade',
+      'User-Agent',
+      'Via',
+      'Warning',
     ];
 
     function findHeader(header) {
-      for (let i = 0, len = requestHeaders.length; i < len; i++) {
-        if (requestHeaders[i].key === header) {
-          return requestHeaders[i];
-        }
-      }
+      return requestHeaders.find((item) => item.key === header);
     }
 
-    headers.forEach(function(header) {
-      it(`${header} has autocomplete property`, function() {
+    headers.forEach((header) => {
+      it(`${header} has autocomplete property`, () => {
         const def = findHeader(header);
         assert.typeOf(def.autocomplete, 'array');
         assert.isAbove(def.autocomplete.length, 0);
@@ -109,57 +106,10 @@ describe('<arc-definitions>', function() {
     });
   });
 
-  describe('_setDefinitions()', () => {
-    let element;
-    before(async () => {
-      element = await basicFixture();
-    });
-
-    it('has no _definitionsReady by default', () => {
-      assert.isUndefined(element._definitionsReady);
-    });
-
-    it('sets _definitionsReady', () => {
-      element._setDefinitions();
-      assert.isTrue(element._definitionsReady);
-    });
-
-    it('sets _requestHeaders', () => {
-      element._setDefinitions();
-      assert.typeOf(element._requestHeaders, 'array', 'is an array');
-      assert.notEmpty(element._requestHeaders, 'is not empty array');
-    });
-
-    it('sets _responseHeaders', () => {
-      element._setDefinitions();
-      assert.typeOf(element._responseHeaders, 'array', 'is an array');
-      assert.notEmpty(element._responseHeaders, 'is not empty array');
-    });
-
-    it('sets _statusCodes', () => {
-      element._setDefinitions();
-      assert.typeOf(element._statusCodes, 'array', 'is an array');
-      assert.notEmpty(element._statusCodes, 'is not empty array');
-    });
-  });
-
   describe('queryResponseHeaders()', () => {
     let element;
     beforeEach(async () => {
       element = await basicFixture();
-    });
-
-    it('calls queryHeaders() with passed argument', () => {
-      const spy = sinon.spy(element, 'queryHeaders');
-      const value = 'accept';
-      element.queryResponseHeaders(value);
-      assert.equal(spy.args[0][0], value);
-    });
-
-    it('calls queryHeaders() with type argument set to response', () => {
-      const spy = sinon.spy(element, 'queryHeaders');
-      element.queryResponseHeaders('accept');
-      assert.equal(spy.args[0][1], 'response');
     });
 
     it('returns a value', () => {
@@ -173,19 +123,6 @@ describe('<arc-definitions>', function() {
     let element;
     beforeEach(async () => {
       element = await basicFixture();
-    });
-
-    it('calls queryHeaders() with passed argument', () => {
-      const spy = sinon.spy(element, 'queryHeaders');
-      const value = 'accept';
-      element.queryRequestHeaders(value);
-      assert.equal(spy.args[0][0], value);
-    });
-
-    it('calls queryHeaders() with type argument set to request', () => {
-      const spy = sinon.spy(element, 'queryHeaders');
-      element.queryRequestHeaders('accept');
-      assert.equal(spy.args[0][1], 'request');
     });
 
     it('returns a value', () => {
@@ -267,17 +204,14 @@ describe('<arc-definitions>', function() {
       element = await basicFixture();
     });
 
-    function fire(query, type) {
-      if (type === undefined) {
-        type = 'request';
-      }
+    function fire(query, type = 'request') {
       const e = new CustomEvent('query-headers', {
         detail: {
           type,
-          query
+          query,
         },
         bubbles: true,
-        cancelable: true
+        cancelable: true,
       });
       document.body.dispatchEvent(e);
       return e;
@@ -300,13 +234,6 @@ describe('<arc-definitions>', function() {
       assert.isTrue(e.defaultPrevented);
     });
 
-    it('calls queryHeaders()', () => {
-      const spy = sinon.spy(element, 'queryHeaders');
-      fire('ac');
-      assert.equal(spy.args[0][0], 'ac');
-      assert.equal(spy.args[0][1], 'request');
-    });
-
     it('ignores cancelled eventds', () => {
       const spy = sinon.spy(element, 'queryHeaders');
       document.body.addEventListener('query-headers', function f(e) {
@@ -327,10 +254,10 @@ describe('<arc-definitions>', function() {
     function fire(code) {
       const e = new CustomEvent('query-status-codes', {
         detail: {
-          code
+          code,
         },
         bubbles: true,
-        cancelable: true
+        cancelable: true,
       });
       document.body.dispatchEvent(e);
       return e;
@@ -344,12 +271,6 @@ describe('<arc-definitions>', function() {
     it('cancels the event', () => {
       const e = fire(200);
       assert.isTrue(e.defaultPrevented);
-    });
-
-    it('calls getStatusCode()', () => {
-      const spy = sinon.spy(element, 'getStatusCode');
-      fire(202);
-      assert.equal(spy.args[0][0], 202);
     });
 
     it('ignores cancelled eventds', () => {
@@ -375,7 +296,9 @@ describe('<arc-definitions>', function() {
     });
 
     it('respects existing aria-hidden attribute', async () => {
-      const element = await fixture(`<arc-definitions aria-hidden="false"></arc-definitions>`);
+      const element = await fixture(
+        `<arc-definitions aria-hidden="false"></arc-definitions>`
+      );
       assert.equal(element.getAttribute('aria-hidden'), 'false');
     });
   });

@@ -1,6 +1,6 @@
 [![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/arc-definitions.svg)](https://www.npmjs.com/package/@advanced-rest-client/arc-definitions)
 
-[![Build Status](https://travis-ci.org/advanced-rest-client/arc-definitions.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/arc-definitions)
+[![Build Status](https://travis-ci.com/advanced-rest-client/arc-definitions.svg)](https://travis-ci.com/advanced-rest-client/arc-definitions)
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/arc-definitions)
 
@@ -12,9 +12,11 @@ The `<arc-definitions>` element listens for query events.
 Other elements can dispatch the `query-headers` and `query-status-codes` events that are handled by this element. Events are stopped from propagation.
 Handled event receives new property on the `detail` object with the query result.
 
-## Dispatching query events
+## Usage
 
-### Querying for headers data
+### Dispatching query events
+
+#### Querying for headers data
 
 Each header definition item has the following properties:
 -   `key` - String, The name of the header
@@ -54,7 +56,7 @@ const data = document.querySelector('arc-definitions').queryHeaders('A', 'respon
 console.log(data); // list of headers with "A" in the name
 ```
 
-### Querying for status code data
+#### Querying for status code data
 
 Status code definition item has the following properties:
 -   `key` - Number, Code value
@@ -91,12 +93,6 @@ const status = document.querySelector('arc-definitions').getStatusCode(201);
 console.log(status); // Status code definition for 201
 ```
 
-## API components
-
-This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
-
-## Usage
-
 ### Installation
 ```
 npm install --save @advanced-rest-client/arc-definitions
@@ -123,7 +119,7 @@ npm install --save @advanced-rest-client/arc-definitions
 import { LitElement, html } from 'lit-element';
 import '@advanced-rest-client/arc-definitions/arc-definitions.js';
 
-class SampleElement extends PolymerElement {
+class SampleElement extends LitElement {
   render() {
     return html`
     <arc-definitions></arc-definitions>
@@ -153,7 +149,7 @@ class SampleElement extends PolymerElement {
 customElements.define('sample-element', SampleElement);
 ```
 
-### Development
+## Development
 
 ```sh
 git clone https://github.com/advanced-rest-client/arc-definitions

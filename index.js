@@ -12,6 +12,10 @@ License for the specific language governing permissions and limitations under
 the License.
 */
 
-import { ArcDefinitions } from './src/ArcDefinitions.js';
-
-window.customElements.define('arc-definitions', ArcDefinitions);
+export {
+  ArcDefinitions,
+  queryRequestHeaders,
+  queryResponseHeaders,
+  queryHeaders,
+  getStatusCode,
+} from './src/ArcDefinitions.js';
