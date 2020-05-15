@@ -117,3 +117,65 @@
 
 
 
+<a name="3.1.0"></a>
+## [3.1.0](https://github.com/advanced-rest-client/arc-definitions/compare/2.0.2...3.1.0) (2020-05-15)
+
+### Build
+
+* bumping version [c5a95f7](https://github.com/advanced-rest-client/arc-definitions/commit/c5a95f7ee08b442f26439310c41e63ed6cafc493) by Pawel
+
+
+### Features
+
+* adding export functions to access the data [132ff1f](https://github.com/advanced-rest-client/arc-definitions/commit/132ff1fcdf6babe2419defa58f4787af52af6ee5) by Pawel
+
+
+### Refactor
+
+* upgrading to final WC spec [31dcc61](https://github.com/advanced-rest-client/arc-definitions/commit/31dcc614ab3b22bf97741889f003a77cf34dde94) by Pawel Psztyc
+
+
+### Other
+
+* New: Adding npm ignore file
+ [902e255](https://github.com/advanced-rest-client/arc-definitions/commit/902e255ca4654c43b748f41a027d3a57b3d84946) by Pawel Psztyc
+* New: Adding npm ignore file
+ [6f923d6](https://github.com/advanced-rest-client/arc-definitions/commit/6f923d6e927f203695784ca24a708662d3eb52f0) by Pawel Psztyc
+* Breaking: Updating component to Polymer 3
+ [1cb2e01](https://github.com/advanced-rest-client/arc-definitions/commit/1cb2e01dd903053448ffd2586c16629f3a036848) by Pawel Psztyc
+* New: Added autocomplete values for request headers definitions.
+ [2406f0c](https://github.com/advanced-rest-client/arc-definitions/commit/2406f0cb987a35e7d030320c73d4bbeaad53bed3) by Pawel Psztyc
+* Update: Adding json file for support for linter when editing the data.
+ [5945fae](https://github.com/advanced-rest-client/arc-definitions/commit/5945fae810ccbcce472b6353ffa1255d85140399) by Pawel Psztyc
+* Update: Added loading on demand option.
+ [e365da3](https://github.com/advanced-rest-client/arc-definitions/commit/e365da32b980fb0853039416f9644ca060fd0e13) by Pawel Psztyc
+* Update: Updated element Travis and tests configuration to current state.
+ [7ea9ae0](https://github.com/advanced-rest-client/arc-definitions/commit/7ea9ae09b1ad56ecf3e73c001b394c7e9dd7d0fc) by Pawel Psztyc
+* New: Added more detailed tests.
+ [7faae00](https://github.com/advanced-rest-client/arc-definitions/commit/7faae00660e6a2ddde29df5b19ad931d3c5d3f1a) by Pawel Psztyc
+* Breaking: Query events now returns all type list values if query value is not set.
+ [a33c802](https://github.com/advanced-rest-client/arc-definitions/commit/a33c8021c3853c5fa48a38418efe4d9574d83507) by Pawel Psztyc
+* New: Added `event.preventDefault()` to the events to determine that the event has been handled.
+ [cbba79a](https://github.com/advanced-rest-client/arc-definitions/commit/cbba79a38c1eb6fad35bb8caad59a36d0512245b) by Pawel Psztyc
+* Update: Updated travis configuration
+ [1cf0c62](https://github.com/advanced-rest-client/arc-definitions/commit/1cf0c62e0aaa122df4f86f6395b472cb8812212c) by Pawel Psztyc
+* Update: Removed JSON file download and put the definitions into the element body for faster initialization.
+ [1a52115](https://github.com/advanced-rest-client/arc-definitions/commit/1a5211554d5df864eccee41ff2bd3940497133f1) by Pawel Psztyc
+* Update: updated tests. I must have been very tired when I wrote the previous version...
+ [76bcd78](https://github.com/advanced-rest-client/arc-definitions/commit/76bcd7813298d9d2a2f04fa649b384ab4f9a888c) by Pawel Psztyc
+* Fix: Updated script location path
+ [281f9ad](https://github.com/advanced-rest-client/arc-definitions/commit/281f9ad1328f26a9194834c8afa001eb3fd29fa2) by jarrodek
+* Fix: Fixed travis configuration
+ [a2104d3](https://github.com/advanced-rest-client/arc-definitions/commit/a2104d3e7d081b06202d8106e20eaf7826321f83) by jarrodek
+* Fix: fixed issues causing test to fail
+ [2f3f574](https://github.com/advanced-rest-client/arc-definitions/commit/2f3f5747f954a9bee52437556e5eeca7e28231cb) by jarrodek
+* Update: Added new Travis configuration
+ [ce3aa1a](https://github.com/advanced-rest-client/arc-definitions/commit/ce3aa1add4429a7d02a6ef0ede9c49992e154d14) by jarrodek
+* New: Added hero image
+ [aa813f4](https://github.com/advanced-rest-client/arc-definitions/commit/aa813f4da12beda5b4b10c515d9e2051225810a3) by jarrodek
+* Docs: Updated docs
+ [e4346cc](https://github.com/advanced-rest-client/arc-definitions/commit/e4346ccf605218121e568f83007c00154e9ebca1) by jarrodek
+* New: Initial commit for first release
+ [10f9d04](https://github.com/advanced-rest-client/arc-definitions/commit/10f9d04c8bdc9de3dcb079b85b221f2f0934bc55) by jarrodek
+
+
