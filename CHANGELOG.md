@@ -179,3 +179,22 @@
  [10f9d04](https://github.com/advanced-rest-client/arc-definitions/commit/10f9d04c8bdc9de3dcb079b85b221f2f0934bc55) by jarrodek
 
 
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/advanced-rest-client/arc-definitions/compare/3.0.0...3.1.1) (2020-10-04)
+
+### Build
+
+* bumping version [c5a95f7](https://github.com/advanced-rest-client/arc-definitions/commit/c5a95f7ee08b442f26439310c41e63ed6cafc493) by Pawel
+
+
+### Update
+
+* updating types, spelling, wc file [c0a66ae](https://github.com/advanced-rest-client/arc-definitions/commit/c0a66ae67fa8ba7266a42d5b4f1d784290f80790) by Pawel
+* [ci skip] automated merge master->stage. syncing main branches [acd7a8b](https://github.com/advanced-rest-client/arc-definitions/commit/acd7a8b82cdd8bf478955c32d15bb7ad8e53155e) by Ci agent
+
+
+### Features
+
+* adding export functions to access the data [132ff1f](https://github.com/advanced-rest-client/arc-definitions/commit/132ff1fcdf6babe2419defa58f4787af52af6ee5) by Pawel
+
+
