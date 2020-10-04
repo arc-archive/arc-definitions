@@ -11,6 +11,10 @@ export interface HeaderDefinition {
    * Example value of the header
    */
   example: string;
+  /**
+   * Autocomplete values for the header.
+   */
+  autocomplete?: string[];
 }
 
 export interface StatusCodeDefinition {

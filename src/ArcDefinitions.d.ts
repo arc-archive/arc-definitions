@@ -3,7 +3,7 @@ import { HeaderDefinition, StatusCodeDefinition } from './Data';
 export { HeaderDefinition, StatusCodeDefinition };
 
 /**
- * Queries for request headers that containins a `query`. If query is
+ * Queries for request headers that contains a `query`. If query is
  * not set (value is falsy) then it returns all headers definitions array.
  *
  * @param name A header name to look for. It will match a header where the header name contains the `name` param.
@@ -12,7 +12,7 @@ export { HeaderDefinition, StatusCodeDefinition };
 export declare function queryRequestHeaders(name: string): HeaderDefinition[];
 
 /**
- * Queries for response headers that containins a `query`. If query is
+ * Queries for response headers that contains a `query`. If query is
  * not set (value is falsy) then it returns all headers definitions array.
  *
  * @param name A header name to look for. It will match a header where the header
@@ -22,7 +22,7 @@ export declare function queryRequestHeaders(name: string): HeaderDefinition[];
 export declare function queryResponseHeaders(name: string): HeaderDefinition[];
 
 /**
- * Queries for headers containin a `query`. If query is not set
+ * Queries for headers containing a `query`. If query is not set
  * (value is falsy) then it returns all headers definitions array.
  *
  * @param query A query to search for in the `key` field of the headers array.
@@ -32,7 +32,7 @@ export declare function queryResponseHeaders(name: string): HeaderDefinition[];
 export declare function queryHeaders(query: string, type: string): HeaderDefinition[];
 
 /**
- * Convinient function to look for a status code in the array.
+ * Convenient function to look for a status code in the array.
  *
  * @param codeArg The status code to look for.
  * @returns Status code definition or null if not found.
@@ -40,7 +40,7 @@ export declare function queryHeaders(query: string, type: string): HeaderDefinit
 export function getStatusCode(codeArg: number): StatusCodeDefinition|StatusCodeDefinition[]|null;
 
 /**
- * Request / response headers and status codes definitions database used in Adavanced REST Client and API Console.
+ * Request / response headers and status codes definitions database used in Advanced REST Client and API Console.
  */
 export declare class ArcDefinitions extends HTMLElement {
   /**
@@ -101,7 +101,7 @@ export declare class ArcDefinitions extends HTMLElement {
   disconnectedCallback(): void;
 
   /**
-   * Queries for request headers that containins a `query`. If query is
+   * Queries for request headers that contains a `query`. If query is
    * not set (value is falsy) then it returns all headers definitions array.
    *
    * @param name A header name to look for. It will match a header where the header name contains the `name` param.
@@ -111,7 +111,7 @@ export declare class ArcDefinitions extends HTMLElement {
   queryRequestHeaders(name: string): HeaderDefinition[];
 
   /**
-   * Queries for response headers that containins a `query`. If query is
+   * Queries for response headers that contains a `query`. If query is
    * not set (value is falsy) then it returns all headers definitions array.
    *
    * @param name A header name to look for. It will match a header where the header
@@ -122,7 +122,7 @@ export declare class ArcDefinitions extends HTMLElement {
   queryResponseHeaders(name: string): HeaderDefinition[];
 
   /**
-   * Queries for headers containin a `query`. If query is not set
+   * Queries for headers containing a `query`. If query is not set
    * (value is falsy) then it returns all headers definitions array.
    *
    * @param query A query to search for in the `key` field of the
@@ -136,7 +136,7 @@ export declare class ArcDefinitions extends HTMLElement {
   queryHeaders(query: string, type: string): HeaderDefinition[];
 
   /**
-   * Convinient function to look for a status code in the array.
+   * Convenient function to look for a status code in the array.
    *
    * @param code The status code to look for.
    * @returns Status code definition or null if not found.

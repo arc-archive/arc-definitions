@@ -40,7 +40,7 @@ function stopEvent(e) {
 }
 
 /**
- * Queries for headers containin a `query`. If query is not set
+ * Queries for headers containing a `query`. If query is not set
  * (value is falsy) then it returns all headers definitions array.
  *
  * @param {string} query A query to search for in the `key` field of the
@@ -62,7 +62,7 @@ export function queryHeaders(query, type) {
 }
 
 /**
- * Queries for request headers that containins a `query`. If query is
+ * Queries for request headers that contains a `query`. If query is
  * not set (value is falsy) then it returns all headers definitions array.
  *
  * @param {string} name A header name to look for. It will match a header
@@ -75,7 +75,7 @@ export function queryRequestHeaders(name) {
 }
 
 /**
- * Queries for response headers that containins a `query`. If query is
+ * Queries for response headers that contains a `query`. If query is
  * not set (value is falsy) then it returns all headers definitions array.
  *
  * @param {string} name A header name to look for. It will match a header where the header
@@ -88,7 +88,7 @@ export function queryResponseHeaders(name) {
 }
 
 /**
- * Convinient function to look for a status code in the array.
+ * Convenient function to look for a status code in the array.
  *
  * @param {number} codeArg The status code to look for.
  * @return {StatusCodeDefinition|StatusCodeDefinition[]|null} Status code definition or null if not found.
@@ -109,7 +109,7 @@ export function getStatusCode(codeArg) {
 }
 
 /**
- * Request / response headers and status codes definitions database used in Adavanced REST Client and API Console.
+ * Request / response headers and status codes definitions database used in Advanced REST Client and API Console.
  */
 export class ArcDefinitions extends HTMLElement {
   /**
@@ -198,7 +198,7 @@ export class ArcDefinitions extends HTMLElement {
   }
 
   /**
-   * Queries for request headers that containins a `query`. If query is
+   * Queries for request headers that contains a `query`. If query is
    * not set (value is falsy) then it returns all headers definitions array.
    *
    * @param {string} name A header name to look for. It will match a header
@@ -212,7 +212,7 @@ export class ArcDefinitions extends HTMLElement {
   }
 
   /**
-   * Queries for response headers that containins a `query`. If query is
+   * Queries for response headers that contains a `query`. If query is
    * not set (value is falsy) then it returns all headers definitions array.
    *
    * @param {string} name A header name to look for. It will match a header where the header
@@ -226,7 +226,7 @@ export class ArcDefinitions extends HTMLElement {
   }
 
   /**
-   * Queries for headers containin a `query`. If query is not set
+   * Queries for headers containing a `query`. If query is not set
    * (value is falsy) then it returns all headers definitions array.
    *
    * @param {string} query A query to search for in the `key` field of the
@@ -242,9 +242,9 @@ export class ArcDefinitions extends HTMLElement {
   }
 
   /**
-   * Convinient function to look for a status code in the array.
+   * Convenient function to look for a status code in the array.
    *
-   * @param {number} code The status code to look for.
+   * @param {number} codeArg The status code to look for.
    * @return {StatusCodeDefinition|StatusCodeDefinition[]|null} Status code definition or null if not found.
    * @deprecated Please, use `getStatusCode()` exported by this module instead.
    */

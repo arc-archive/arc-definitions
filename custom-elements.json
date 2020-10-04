@@ -1,0 +1,27 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "arc-definitions",
+      "path": "./arc-definitions.js",
+      "description": "Request / response headers and status codes definitions database used in Advanced REST Client and API Console.",
+      "properties": [
+        {
+          "name": "requestHeaders",
+          "description": "A list of request headers.\n\nEach object contains a `key`, `desc` and `example` property. `key` is a header name,\n`desc` is a description of the header and `example` is an example of usage.\n\n### Example\n```\n[{\n  \"key\": \"Accept\",\n  \"desc\": \"Content-Types that are acceptable.\",\n  \"example\": \"Accept: text/plain\"\n}],\n```",
+          "type": "HeaderDefinition[]"
+        },
+        {
+          "name": "responseHeaders",
+          "description": "A list of response headers.\n\nEach object contains a `key`, `desc` and `example` property. `key` is a header name,\n`desc` is a description of the header and `example` is an example of usage.\n\n### Example\n```\n[{\n  \"key\": \"Age\",\n  \"desc\": \"The age the object has been in a proxy cache in seconds\",\n  \"example\": \"Age: 12\"\n}],\n```",
+          "type": "HeaderDefinition[]"
+        },
+        {
+          "name": "statusCodes",
+          "description": "A list of status codes definitions.\n\nEach object contains a `key`, `label` and `desc` property. `key` is a status code (as\na number), `label` is a status code message and `desc` is description for the status\ncode.\n\n### Example\n```\n[{\n  \"key\": 306,\n  \"label\": \"Switch Proxy\",\n  \"desc\": \"No longer used.\"\n}]",
+          "type": "StatusCodeDefinition[]"
+        }
+      ]
+    }
+  ]
+}
