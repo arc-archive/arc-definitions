@@ -41,6 +41,7 @@ export function getStatusCode(codeArg: number): StatusCodeDefinition|StatusCodeD
 
 /**
  * Request / response headers and status codes definitions database used in Advanced REST Client and API Console.
+ * @deprecated Use `@advanced-rest-client/app` instead.
  */
 export declare class ArcDefinitions extends HTMLElement {
   /**

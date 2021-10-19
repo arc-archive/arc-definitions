@@ -1,10 +1,8 @@
-[![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/arc-definitions.svg)](https://www.npmjs.com/package/@advanced-rest-client/arc-definitions)
+# Deprecated
 
-[![Build Status](https://travis-ci.com/advanced-rest-client/arc-definitions.svg)](https://travis-ci.com/advanced-rest-client/arc-definitions)
+This component is deprecated. Use `@advanced-rest-client/app` instead.
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/arc-definitions)
-
-# arc-definitions
+------
 
 Request / response headers and status codes definitions database used in Adavanced REST Client and API Console.
 
